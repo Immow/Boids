@@ -1,6 +1,6 @@
 function love.conf(t)
-	t.title = "MineSweeper"
-	t.identity = "MineSweeper"
+	t.title = "Boids"
+	t.identity = "Boids"
 	t.version = "11.4"
 	t.console = true
 	t.window.width = 1500
