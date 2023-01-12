@@ -100,12 +100,14 @@ function Vec2:setPosition(x,y)
 	self.y = y
 end
 
----Distance between two 2d vectors
----@param a table a = (x, y)
----@param b table b = (x, y)
----@return number length
-function Vec2.dist(a, b)
-	return math.sqrt((b.x * b.x - a.x * a.x) + (b.y * b.y - a.y * a.y))
+function Vec2:dist_squared(other)
+	local dx = self.x - other.x
+	local dy = self.y - other.y
+	return dx * dx + dy * dy
+end
+
+function Vec2:dist(other)
+	return math.sqrt(self:dist_squared(other))
 end
 
 function Vec2:length()
@@ -114,6 +116,35 @@ end
 
 function math.clamp(v, lo, hi)
 	return math.max(lo, math.min(v, hi))
+end
+
+-- p5.Vector.prototype.limit = function limit(max) {
+-- 	const mSq = this.magSq();
+-- 	if (mSq > max * max) {
+-- 	  this.div(Math.sqrt(mSq)) //normalize it
+-- 		.mult(max);
+-- 	}
+-- 	return this;
+--   };
+
+-- p5.Vector.prototype.magSq = function magSq() {
+-- 	const x = this.x;
+-- 	const y = this.y;
+-- 	const z = this.z;
+-- 	return x * x + y * y + z * z;
+--   };
+
+function Vec2:msgSq()
+	local x = self.x
+	local y = self.y
+	return x * x + y * y
+end
+
+function Vec2:test(max)
+	local mSq = Vec2:magSq()
+	if mSq > max * max then
+		mSq:normalize()
+	end
 end
 
 function Vec2:limit(min, max)
@@ -128,10 +159,13 @@ end
 
 function Vec2.random2DVector()
 	local angle = love.math.random() * (math.pi * 2)
-	local length = 1
-	local x = length * math.cos(angle)
-	local y = length * math.sin(angle)
+	local x = math.cos(angle)
+	local y = math.sin(angle)
 	return x, y
+end
+
+function Vec2:atan2()
+	return math.atan2(self.y, self.x)
 end
 
 function Vec2:setMag(n)
