@@ -118,40 +118,43 @@ function math.clamp(v, lo, hi)
 	return math.max(lo, math.min(v, hi))
 end
 
--- p5.Vector.prototype.limit = function limit(max) {
--- 	const mSq = this.magSq();
--- 	if (mSq > max * max) {
--- 	  this.div(Math.sqrt(mSq)) //normalize it
--- 		.mult(max);
--- 	}
--- 	return this;
---   };
-
--- p5.Vector.prototype.magSq = function magSq() {
--- 	const x = this.x;
--- 	const y = this.y;
--- 	const z = this.z;
--- 	return x * x + y * y + z * z;
---   };
-
-function Vec2:msgSq()
+---Magnitude Squared
+function Vec2:magSq()
 	local x = self.x
 	local y = self.y
 	return x * x + y * y
 end
 
-function Vec2:test(max)
-	local mSq = Vec2:magSq()
-	if mSq > max * max then
-		mSq:normalize()
-	end
-end
-
-function Vec2:limit(min, max)
-	self.x = math.clamp(self.x, min, max)
-	self.y = math.clamp(self.y, min, max)
+function Vec2:scale(s) -- helper method
+	self.x, self.y = self.x * s, self.y * s
 	return self
 end
+
+function Vec2:limit(max)
+	local mSq = self:magSq()
+	if mSq > max * max then
+		self:div(math.sqrt(mSq)) -- normalise it
+		self:scale(max)
+	end
+	return self
+end
+
+--[[
+p5.Vector.prototype.limit = function limit(max) {
+	const mSq = this.magSq();
+	if (mSq > max * max) {
+		this.div(Math.sqrt(mSq)).mult(max);
+	}
+	return this;
+};
+
+p5.Vector.prototype.magSq = function magSq() {
+	const x = this.x;
+	const y = this.y;
+	const z = this.z;
+	return x * x + y * y + z * z;
+};
+]]
 
 function Vec2:normalise()
 	return self:length() ~= 0 and Vec2(self.x / self:length(), self.y / self:length()) or Vec2(0,0)

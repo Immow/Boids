@@ -24,13 +24,13 @@ function tprint (tbl, indent)
 	return toprint
 end
 
-
 ---@class Boid
 ---@field position any
 ---@field r number
 ---@field velocity any
 ---@field acceleration any
 ---@field maxForce number
+---@field maxSpeed number
 local Boid = {}
 Boid.__index = Boid
 local Vec2 = require("lib.vec2")
@@ -40,9 +40,9 @@ function Boid.new(settings)
 	instance.r            = settings.r or 10
 	instance.velocity     = Vec2(Vec2.random2DVector())
 	instance.acceleration = Vec2()
-	instance.velocity:setMag(love.math.random(1000))
-	-- print(instance.velocity.x, instance.velocity.y)
-	instance.maxForce = 1
+	instance.velocity:setMag(3)
+	instance.maxSpeed = 5
+	instance.maxForce = 0.2
 	return instance
 end
 
@@ -60,19 +60,21 @@ function Boid:alignBoids(boids)
 	end
 	if total > 0 then
 		steering = steering / total
+		steering:setMag(self.maxSpeed)
 		steering = steering - self.velocity
+		steering:limit(self.maxForce)
 	end
 	return steering
 end
 
-function Boid:flock(boids, dt)
+function Boid:flock(boids)
 	local alignment = self:alignBoids(boids)
 	self.acceleration = alignment
 end
 
 function Boid:update(dt)
-	self.position = self.position + self.velocity * dt
-	self.velocity = self.velocity + self.acceleration * dt
+	self.position = self.position + self.velocity * dt * 60
+	self.velocity = self.velocity + self.acceleration
 
 	-- if self.position.x > WINDOW_WIDTH or self.position.x < 0 then self.velocity.x = self.velocity.x * -1 end
 	-- if self.position.y > WINDOW_HEIGHT or self.position.y < 0 then self.velocity.y = self.velocity.y * -1 end

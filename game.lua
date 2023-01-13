@@ -2,7 +2,7 @@ local Game = {boids = {}}
 
 local Boid = require("classes.boid")
 
-local boidAmount = 100
+
 
 function Game:spawnBoid(n)
 	for i = 1, n do
@@ -11,7 +11,7 @@ function Game:spawnBoid(n)
 end
 
 function Game:load()
-	self:spawnBoid(boidAmount)
+	self:spawnBoid(BoidAmount)
 end
 
 function Game:mousepressed(mx, my, mouseButton)
@@ -42,13 +42,14 @@ function Game:draw()
 		totalXVelocity = totalXVelocity + boid.velocity.x
 		totalYVelocity = totalYVelocity + boid.velocity.y
 	end
-	love.graphics.print(totalXVelocity / boidAmount, 5)
-	love.graphics.print(totalYVelocity / boidAmount, 5, 20)
+	love.graphics.print("Average Xvel.: "..totalXVelocity / BoidAmount, 5)
+	love.graphics.print("Average Yvel.: "..totalYVelocity / BoidAmount, 5, 20)
+	love.graphics.print("FPS: "..love.timer.getFPS(), 5, 40)
 end
 
 function Game:update(dt)
 	for _, boid in ipairs(self.boids) do
-		boid:flock(self.boids, dt)
+		boid:flock(self.boids)
 		boid:update(dt)
 	end
 end
