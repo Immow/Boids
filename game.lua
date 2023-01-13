@@ -52,6 +52,7 @@ function Game:update(dt)
 		boid:flock(self.boids)
 		boid:update(dt)
 	end
+	-- love.timer.sleep(1/60)
 end
 
 return Game
