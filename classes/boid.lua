@@ -12,17 +12,17 @@ local Boid = {}
 Boid.__index = Boid
 local Vec2 = require("lib.vec2")
 function Boid.new(settings)
-	local instance        = setmetatable({}, Boid)
-	instance.position     = Vec2(love.math.random(WINDOW_WIDTH), love.math.random(WINDOW_HEIGHT))
-	instance.r            = settings.r or 6
-	instance.velocity     = Vec2(Vec2.random2DVector())
+	local instance            = setmetatable({}, Boid)
+	instance.position         = Vec2(love.math.random(WINDOW_WIDTH), love.math.random(WINDOW_HEIGHT))
+	instance.r                = settings.r or 6
+	instance.velocity         = Vec2(Vec2.random2DVector())
 	instance.velocity:setMag(3)
-	instance.acceleration = Vec2()
-	instance.maxSpeed     = 8
-	instance.minSpeed     = 4
-	instance.maxForceAlign     = 8
-	instance.maxForceSeperate     = 1
-	instance.maxForceCohesion     = 0.2
+	instance.acceleration     = Vec2()
+	instance.maxSpeed         = 5
+	instance.minSpeed         = 4
+	instance.maxForceAlign    = 0.2 / 1.5
+	instance.maxForceSeperate = 0.2
+	instance.maxForceCohesion = 0.2 / 2
 	return instance
 end
 
@@ -35,36 +35,50 @@ function Boid:align(boids)
 		local d = self.position:dist(other.position)
 		if other ~= self and d < perceptionRadius then
 			steering = steering + other.velocity
+			-- steering:setMag(self.maxSpeed)
 			total = total + 1
 		end
 	end
 	if total > 0 then
-		steering = steering / total
+		steering:div(total)
 		steering:setMag(self.maxSpeed)
-		steering = steering - self.velocity
+		steering:sub(self.velocity)
 		steering:limit_max(self.maxForceAlign)
 	end
 	return steering
 end
 
 function Boid:separation(boids)
-	local perceptionRadius = 50
+	local perceptionRadius = 24
 	local steering = Vec2()
 	local total = 0
 
 	for _, other in ipairs(boids) do
 		local d = self.position:dist(other.position)
 		if other ~= self and d < perceptionRadius then
+			--[[
+				a.x = 1, b.x = 0
+				d = [1, 0]
+				diff = [1, 0]
+				x.1 / x.1 = 1
+				steering += diff
+
+				a.x = 10, b.x = 0
+				d = [10, 0]
+				diff = [10, 0]
+				x.10 / x.10 = 1
+				steering += diff
+			]]
 			local diff = self.position - other.position
 			diff:div(d * d)
 			steering = steering + diff
-			steering:setMag(self.maxSpeed)
+			-- steering:setMag(self.maxSpeed)
 			total = total + 1
 		end
 	end
 	if total > 0 then
-		steering = steering / total
-		-- steering:setMag(self.maxSpeed)
+		steering:div(total)
+		steering:setMag(self.maxSpeed)
 		steering = steering - self.velocity
 		steering:limit_max(self.maxForceSeperate)
 	end
@@ -84,7 +98,7 @@ function Boid:cohesion(boids)
 		end
 	end
 	if total > 0 then
-		steering = steering / total
+		steering:div(total)
 		steering = steering - self.position
 		steering:setMag(self.maxSpeed)
 		steering = steering - self.velocity

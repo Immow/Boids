@@ -80,14 +80,22 @@ function Vec2:div(x, y)
 end
 
 function Vec2:mul(x, y)
-	self.x = self.x * x
-	self.y = self.y * (y or x)
+	if type(x) == "table" then
+		return self * x
+	else
+		self.x = self.x * x
+		self.y = self.y * (y or x)
+	end
 	return self
 end
 
 function Vec2:sub(x, y)
-	self.x = self.x - x
-	self.y = self.y - (y or x)
+	if type(x) == "table" then
+		return self - x
+	else
+		self.x = self.x - x
+		self.y = self.y - (y or x)
+	end
 	return self
 end
 
