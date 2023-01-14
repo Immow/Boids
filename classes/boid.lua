@@ -7,6 +7,7 @@
 ---@field maxForceAlign number
 ---@field maxForceSeperate number
 ---@field maxForceCohesion number
+---@field minSpeed number
 local Boid = {}
 Boid.__index = Boid
 local Vec2 = require("lib.vec2")
@@ -17,15 +18,16 @@ function Boid.new(settings)
 	instance.velocity     = Vec2(Vec2.random2DVector())
 	instance.velocity:setMag(3)
 	instance.acceleration = Vec2()
-	instance.maxSpeed     = 5
-	instance.maxForceAlign     = 1
-	instance.maxForceSeperate     = 1.5
-	instance.maxForceCohesion     = 0.02
+	instance.maxSpeed     = 8
+	instance.minSpeed     = 4
+	instance.maxForceAlign     = 8
+	instance.maxForceSeperate     = 1
+	instance.maxForceCohesion     = 0.2
 	return instance
 end
 
 function Boid:align(boids)
-	local perceptionRadius = 50
+	local perceptionRadius = 25
 	local steering = Vec2()
 	local total = 0
 
@@ -40,13 +42,13 @@ function Boid:align(boids)
 		steering = steering / total
 		steering:setMag(self.maxSpeed)
 		steering = steering - self.velocity
-		steering:limit(self.maxForceAlign)
+		steering:limit_max(self.maxForceAlign)
 	end
 	return steering
 end
 
 function Boid:separation(boids)
-	local perceptionRadius = 10
+	local perceptionRadius = 50
 	local steering = Vec2()
 	local total = 0
 
@@ -56,14 +58,15 @@ function Boid:separation(boids)
 			local diff = self.position - other.position
 			diff:div(d * d)
 			steering = steering + diff
+			steering:setMag(self.maxSpeed)
 			total = total + 1
 		end
 	end
 	if total > 0 then
 		steering = steering / total
-		steering:setMag(self.maxSpeed)
+		-- steering:setMag(self.maxSpeed)
 		steering = steering - self.velocity
-		steering:limit(self.maxForceSeperate)
+		steering:limit_max(self.maxForceSeperate)
 	end
 	return steering
 end
@@ -85,7 +88,7 @@ function Boid:cohesion(boids)
 		steering = steering - self.position
 		steering:setMag(self.maxSpeed)
 		steering = steering - self.velocity
-		steering:limit(self.maxForceCohesion)
+		steering:limit_max(self.maxForceCohesion)
 	end
 	return steering
 end
@@ -100,9 +103,10 @@ function Boid:flock(boids)
 end
 
 function Boid:update(dt)
-	self.position = self.position + self.velocity * dt * 60
-	self.velocity = self.velocity + self.acceleration * dt * 60
-	self.velocity:limit(self.maxSpeed)
+	self.position = self.position + self.velocity
+	self.velocity = self.velocity + self.acceleration
+	self.velocity:limit_max(self.maxSpeed)
+	self.velocity:limit_min(self.minSpeed)
 	self.acceleration = self.acceleration * 0
 
 	-- if self.position.x > WINDOW_WIDTH or self.position.x < 0 then self.velocity.x = self.velocity.x * -1 end

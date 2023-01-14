@@ -130,11 +130,20 @@ function Vec2:scale(s) -- helper method
 	return self
 end
 
-function Vec2:limit(max)
+function Vec2:limit_max(max)
 	local mSq = self:magSq()
 	if mSq > max * max then
 		self:div(math.sqrt(mSq)) -- normalise it
 		self:scale(max)
+	end
+	return self
+end
+
+function Vec2:limit_min(min)
+	local mSq = self:magSq()
+	if mSq < min * min then
+		self:div(math.sqrt(mSq)) -- normalise it
+		self:scale(min)
 	end
 	return self
 end

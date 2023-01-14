@@ -1,1 +1,1 @@
-BoidAmount = 100
+BoidAmount = 200
