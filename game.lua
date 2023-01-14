@@ -1,5 +1,3 @@
--- require("cow")
-
 local Game = {boids = {}}
 local Boid = require("classes.boid")
 

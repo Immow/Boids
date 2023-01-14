@@ -3,12 +3,12 @@ local maxSpeed = 5
 local velocity = 3
 local maxForce = 0.2
 
--- local VecA = {
--- 	position = Vec2(5, 5),
--- 	velocity = Vec2(1, 0.5),
--- 	acceleration = Vec2(),
--- }
--- VecA.velocity:setMag(3)
+local VecA = {
+	position = Vec2(5, 5),
+	velocity = Vec2(1, 0.5),
+	acceleration = Vec2(),
+}
+VecA.velocity:setMag(3)
 
 local VecB = {
 	position = Vec2(10, 5),
