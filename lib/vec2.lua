@@ -68,20 +68,31 @@ function Vec2.copy(vec)
 end
 
 function Vec2:add(x, y)
-	self.x = self.x + (x)
-	self.y = self.y + (y or x)
+	if type(x) == "table" then
+		self.x = self.x + x.x
+		self.y = self.y + x.y
+	else
+		self.x = self.x + (x)
+		self.y = self.y + (y or x)
+	end
 	return self
 end
 
 function Vec2:div(x, y)
-	self.x = self.x / x
-	self.y = self.y / (y or x)
+	if type(x) == "table" then
+		self.x = self.x / x.x
+		self.y = self.y / x.y
+	else
+		self.x = self.x / x
+		self.y = self.y / (y or x)
+	end
 	return self
 end
 
 function Vec2:mul(x, y)
 	if type(x) == "table" then
-		return self * x
+		self.x = self.x * x.x
+		self.y = self.y * x.y
 	else
 		self.x = self.x * x
 		self.y = self.y * (y or x)
@@ -91,7 +102,8 @@ end
 
 function Vec2:sub(x, y)
 	if type(x) == "table" then
-		return self - x
+		self.x = self.x - x.x
+		self.y = self.y - x.y
 	else
 		self.x = self.x - x
 		self.y = self.y - (y or x)
@@ -141,8 +153,7 @@ end
 function Vec2:limit_max(max)
 	local mSq = self:magSq()
 	if mSq > max * max then
-		self:div(math.sqrt(mSq)) -- normalise it
-		self:scale(max)
+		self:div(math.sqrt(mSq)):mul(max) -- normalise it
 	end
 	return self
 end
@@ -150,8 +161,7 @@ end
 function Vec2:limit_min(min)
 	local mSq = self:magSq()
 	if mSq < min * min then
-		self:div(math.sqrt(mSq)) -- normalise it
-		self:scale(min)
+		self:div(math.sqrt(mSq)):mul(min) -- normalise it
 	end
 	return self
 end

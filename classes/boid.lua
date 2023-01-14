@@ -16,7 +16,7 @@ function Boid.new(settings)
 	instance.position         = Vec2(love.math.random(WINDOW_WIDTH), love.math.random(WINDOW_HEIGHT))
 	instance.r                = settings.r or 6
 	instance.velocity         = Vec2(Vec2.random2DVector())
-	instance.velocity:setMag(3)
+	instance.velocity:setMag(love.math.random(2, 4))
 	instance.acceleration     = Vec2()
 	instance.maxSpeed         = 5
 	instance.minSpeed         = 4
@@ -34,8 +34,7 @@ function Boid:align(boids)
 	for _, other in ipairs(boids) do
 		local d = self.position:dist(other.position)
 		if other ~= self and d < perceptionRadius then
-			steering = steering + other.velocity
-			-- steering:setMag(self.maxSpeed)
+			steering:add(other.velocity)
 			total = total + 1
 		end
 	end
@@ -56,30 +55,16 @@ function Boid:separation(boids)
 	for _, other in ipairs(boids) do
 		local d = self.position:dist(other.position)
 		if other ~= self and d < perceptionRadius then
-			--[[
-				a.x = 1, b.x = 0
-				d = [1, 0]
-				diff = [1, 0]
-				x.1 / x.1 = 1
-				steering += diff
-
-				a.x = 10, b.x = 0
-				d = [10, 0]
-				diff = [10, 0]
-				x.10 / x.10 = 1
-				steering += diff
-			]]
 			local diff = self.position - other.position
 			diff:div(d * d)
-			steering = steering + diff
-			-- steering:setMag(self.maxSpeed)
+			steering:add(diff)
 			total = total + 1
 		end
 	end
 	if total > 0 then
 		steering:div(total)
 		steering:setMag(self.maxSpeed)
-		steering = steering - self.velocity
+		steering:sub(self.velocity)
 		steering:limit_max(self.maxForceSeperate)
 	end
 	return steering
@@ -93,35 +78,32 @@ function Boid:cohesion(boids)
 	for _, other in ipairs(boids) do
 		local d = self.position:dist(other.position)
 		if other ~= self and d < perceptionRadius then
-			steering = steering + other.position
+			steering:add(other.position)
 			total = total + 1
 		end
 	end
 	if total > 0 then
 		steering:div(total)
-		steering = steering - self.position
+		steering:sub(self.position)
 		steering:setMag(self.maxSpeed)
-		steering = steering - self.velocity
+		steering:sub(self.velocity)
 		steering:limit_max(self.maxForceCohesion)
 	end
 	return steering
 end
 
 function Boid:flock(boids)
-	local alignment = self:align(boids)
-	local cohesion = self:cohesion(boids)
-	local separation = self:separation(boids)
-	self.acceleration = self.acceleration + alignment
-	self.acceleration = self.acceleration + cohesion
-	self.acceleration = self.acceleration + separation
+	self.acceleration:add(self:align(boids))
+	self.acceleration:add(self:cohesion(boids))
+	self.acceleration:add(self:separation(boids))
 end
 
 function Boid:update(dt)
 	self.position = self.position + self.velocity
 	self.velocity = self.velocity + self.acceleration
 	self.velocity:limit_max(self.maxSpeed)
-	self.velocity:limit_min(self.minSpeed)
-	self.acceleration = self.acceleration * 0
+	-- self.velocity:limit_min(self.minSpeed)
+	self.acceleration:mul(0)
 
 	-- if self.position.x > WINDOW_WIDTH or self.position.x < 0 then self.velocity.x = self.velocity.x * -1 end
 	-- if self.position.y > WINDOW_HEIGHT or self.position.y < 0 then self.velocity.y = self.velocity.y * -1 end
