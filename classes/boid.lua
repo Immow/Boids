@@ -14,15 +14,15 @@ local Vec2 = require("lib.vec2")
 function Boid.new(settings)
 	local instance            = setmetatable({}, Boid)
 	instance.position         = Vec2(love.math.random(WINDOW_WIDTH), love.math.random(WINDOW_HEIGHT))
-	instance.r                = settings.r or 6
+	instance.r                = settings.r or 3
 	instance.velocity         = Vec2(Vec2.random2DVector())
 	instance.velocity:setMag(love.math.random(2, 4))
 	instance.acceleration     = Vec2()
 	instance.maxSpeed         = 5
 	instance.minSpeed         = 4
-	instance.maxForceAlign    = 0.2 / 1.5
+	instance.maxForceAlign    = 0.2
 	instance.maxForceSeperate = 0.2
-	instance.maxForceCohesion = 0.2 / 2
+	instance.maxForceCohesion = 0.2
 	return instance
 end
 
@@ -42,7 +42,7 @@ function Boid:align(boids)
 		steering:div(total)
 		steering:setMag(self.maxSpeed)
 		steering:sub(self.velocity)
-		steering:limit_max(self.maxForceAlign)
+		steering:setLimit_max(self.maxForceAlign)
 	end
 	return steering
 end
@@ -65,7 +65,7 @@ function Boid:separation(boids)
 		steering:div(total)
 		steering:setMag(self.maxSpeed)
 		steering:sub(self.velocity)
-		steering:limit_max(self.maxForceSeperate)
+		steering:setLimit_max(self.maxForceSeperate)
 	end
 	return steering
 end
@@ -87,21 +87,33 @@ function Boid:cohesion(boids)
 		steering:sub(self.position)
 		steering:setMag(self.maxSpeed)
 		steering:sub(self.velocity)
-		steering:limit_max(self.maxForceCohesion)
+		steering:setLimit_max(self.maxForceCohesion)
 	end
 	return steering
 end
 
 function Boid:flock(boids)
-	self.acceleration:add(self:align(boids))
-	self.acceleration:add(self:cohesion(boids))
-	self.acceleration:add(self:separation(boids))
+	-- self.acceleration:add(self:align(boids))
+	-- self.acceleration:add(self:cohesion(boids))
+	-- self.acceleration:add(self:separation(boids))
+
+	local alignment = self:align(boids)
+	local cohesion = self:cohesion(boids)
+	local separation = self:separation(boids)
+
+	alignment = alignment * 1.5
+	cohesion = cohesion * 1
+	separation = separation * 2
+
+	self.acceleration:add(alignment)
+	self.acceleration:add(cohesion)
+	self.acceleration:add(separation)
 end
 
 function Boid:update(dt)
-	self.position = self.position + self.velocity
-	self.velocity = self.velocity + self.acceleration
-	self.velocity:limit_max(self.maxSpeed)
+	self.position:add(self.velocity)
+	self.velocity:add(self.acceleration)
+	self.velocity:setLimit_max(self.maxSpeed)
 	-- self.velocity:limit_min(self.minSpeed)
 	self.acceleration:mul(0)
 
@@ -114,7 +126,7 @@ function Boid:update(dt)
 end
 
 function Boid:drawBoid()
-	love.graphics.circle("line", self.position.x, self.position.y, self.r)
+	love.graphics.circle("fill", self.position.x, self.position.y, self.r)
 end
 
 function Boid:draw()

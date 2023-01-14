@@ -12,9 +12,9 @@ Vec2_meta.__call = function(self, x, y)
 	}, Vec2)
 end
 
-Vec2.__tostring = function (self)
-	return "Vec2 - X: "..self.x.." Y: "..self.y
-end
+-- Vec2.__tostring = function (self)
+-- 	return "Vec2 - X: "..self.x.." Y: "..self.y
+-- end
 
 Vec2.__newindex = function (self, key, value)
 	error("Can't assign key '"..key.."', valid keys are 'x' & 'y'" )
@@ -120,71 +120,57 @@ function Vec2:setPosition(x,y)
 	self.y = y
 end
 
-function Vec2:dist_squared(other)
+function Vec2:getDist_squared(other)
 	local dx = self.x - other.x
 	local dy = self.y - other.y
 	return dx * dx + dy * dy
 end
 
 function Vec2:dist(other)
-	return math.sqrt(self:dist_squared(other))
+	return math.sqrt(self:getDist_squared(other))
 end
 
-function Vec2:length()
+function Vec2:getLength()
 	return math.sqrt(self.x * self.x + self.y * self.y)
 end
 
-function math.clamp(v, lo, hi)
-	return math.max(lo, math.min(v, hi))
-end
+-- function math.clamp(v, lo, hi)
+-- 	return math.max(lo, math.min(v, hi))
+-- end
 
 ---Magnitude Squared
-function Vec2:magSq()
+function Vec2:getMagSq()
 	local x = self.x
 	local y = self.y
 	return x * x + y * y
 end
 
-function Vec2:scale(s) -- helper method
-	self.x, self.y = self.x * s, self.y * s
-	return self
-end
-
-function Vec2:limit_max(max)
-	local mSq = self:magSq()
+function Vec2:setLimit_max(max)
+	local mSq = self:getMagSq()
 	if mSq > max * max then
-		self:div(math.sqrt(mSq)):mul(max) -- normalise it
+		self:div(math.sqrt(mSq)):mul(max)
 	end
 	return self
 end
 
-function Vec2:limit_min(min)
-	local mSq = self:magSq()
+function Vec2:setLimit_min(min)
+	local mSq = self:getMagSq()
 	if mSq < min * min then
-		self:div(math.sqrt(mSq)):mul(min) -- normalise it
+		self:div(math.sqrt(mSq)):mul(min)
 	end
 	return self
 end
-
---[[
-p5.Vector.prototype.limit = function limit(max) {
-	const mSq = this.magSq();
-	if (mSq > max * max) {
-		this.div(Math.sqrt(mSq)).mult(max);
-	}
-	return this;
-};
-
-p5.Vector.prototype.magSq = function magSq() {
-	const x = this.x;
-	const y = this.y;
-	const z = this.z;
-	return x * x + y * y + z * z;
-};
-]]
 
 function Vec2:normalise()
-	return self:length() ~= 0 and Vec2(self.x / self:length(), self.y / self:length()) or Vec2(0,0)
+	local l = self:getLength()
+	if l ~= 0 then
+		self.x = self.x / l
+		self.y = self.y / l
+	else
+		self.x = 0
+		self.y = 0
+	end
+	return Vec2(self.x, self.y)
 end
 
 function Vec2.random2DVector()

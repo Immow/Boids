@@ -1,8 +1,7 @@
+-- require("cow")
+
 local Game = {boids = {}}
-
 local Boid = require("classes.boid")
-
-
 
 function Game:spawnBoid(n)
 	for i = 1, n do
