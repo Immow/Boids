@@ -101,9 +101,9 @@ function Boid:flock(boids)
 	local cohesion = self:cohesion(boids)
 	local separation = self:separation(boids)
 
-	alignment = alignment * 1.5
-	cohesion = cohesion * 1
-	separation = separation * 2
+	alignment = alignment * SliderSettings["AlignmentFactor"]
+	cohesion = cohesion * SliderSettings["CohesionFactor"]
+	separation = separation * SliderSettings["SeparationFactor"]
 
 	self.acceleration:add(alignment)
 	self.acceleration:add(cohesion)
@@ -114,7 +114,6 @@ function Boid:update(dt)
 	self.position:add(self.velocity)
 	self.velocity:add(self.acceleration)
 	self.velocity:setLimit_max(self.maxSpeed)
-	-- self.velocity:limit_min(self.minSpeed)
 	self.acceleration:mul(0)
 
 	-- if self.position.x > WINDOW_WIDTH or self.position.x < 0 then self.velocity.x = self.velocity.x * -1 end
@@ -130,8 +129,6 @@ function Boid:drawBoid()
 end
 
 function Boid:draw()
-	-- love.graphics.print(self.velocity:length(), self.position.x, self.position.y)
-	-- love.graphics.print(math.floor(self.velocity.y), self.position.x, self.position.y+5)
 	self:drawBoid()
 end
 

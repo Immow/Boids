@@ -1,6 +1,10 @@
 State = require("state")
+Colors = require("lib.colors")
 require("constants")
 require("globals")
+
+Default       = love.graphics.newFont("assets/font/Roboto-Regular.ttf", 12)
+Percentage    = love.graphics.newFont("assets/font/Roboto-Regular.ttf", 16)
 
 function love.load()
 	State.addScene("game")

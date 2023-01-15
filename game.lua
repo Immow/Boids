@@ -1,5 +1,6 @@
 local Game = {boids = {}}
 local Boid = require("classes.boid")
+local Slider = require("sliders")
 
 function Game:spawnBoid(n)
 	for i = 1, n do
@@ -9,6 +10,7 @@ end
 
 function Game:load()
 	self:spawnBoid(BoidAmount)
+	Slider:load()
 end
 
 function Game:mousepressed(mx, my, mouseButton)
@@ -42,6 +44,7 @@ function Game:draw()
 	love.graphics.print("Average Xvel.: "..totalXVelocity / BoidAmount, 5)
 	love.graphics.print("Average Yvel.: "..totalYVelocity / BoidAmount, 5, 20)
 	love.graphics.print("FPS: "..love.timer.getFPS(), 5, 40)
+	Slider:draw()
 end
 
 function Game:update(dt)
@@ -49,6 +52,7 @@ function Game:update(dt)
 		boid:flock(self.boids)
 		boid:update(dt)
 	end
+	Slider:update(dt)
 	love.timer.sleep(1/60)
 end
 
