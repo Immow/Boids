@@ -11,8 +11,8 @@ function Slider.new(settings)
 	instance.groove_height  = 4
 	instance.groove_x       = settings.x + instance.parrent_width - (instance.groove_width + 80)
 	instance.groove_y       = settings.y + instance.parrent_height / 2 - instance.groove_height / 2
-	instance.knob_width     = 28
-	instance.knob_height    = 28
+	instance.knob_width     = 20
+	instance.knob_height    = 20
 	instance.knob_x         = instance.groove_x + instance.groove_width - instance.knob_width
 	instance.knob_y         = settings.y + instance.parrent_height / 2 - instance.knob_height / 2
 	instance.text_bg_width  = 50
