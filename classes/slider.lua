@@ -1,25 +1,28 @@
+local PositionElements = require("lib.positionElements")
+
 local Slider = {}
+local Slider_meta = {}
 Slider.__index = Slider
+Slider_meta.__index = Slider_meta
+setmetatable(Slider, Slider_meta)
+setmetatable(Slider_meta, PositionElements)
 
 function Slider.new(settings)
 	local instance = setmetatable({}, Slider)
-	instance.x              = settings.x
-	instance.y              = settings.y
-	instance.parrent_width  = settings.parrent_width
-	instance.parrent_height = settings.parrent_height
-	instance.groove_width   = 200
+	instance.x              = settings.x or 0
+	instance.y              = settings.y or 0
+	instance.width          = settings.width or 200
+	instance.height         = settings.height or 80
+	instance.knob_width     = settings.know_width or 20
+	instance.knob_height    = settings.knob_height or 20
+	instance.knob_x         = settings.x + instance.width - instance.knob_width
+	instance.knob_y         = settings.y + instance.height / 2 - instance.knob_height / 2
+	instance.groove_width   = settings.width
 	instance.groove_height  = 4
-	instance.groove_x       = settings.x + instance.parrent_width - (instance.groove_width + 80)
-	instance.groove_y       = settings.y + instance.parrent_height / 2 - instance.groove_height / 2
-	instance.knob_width     = 20
-	instance.knob_height    = 20
-	instance.knob_x         = instance.groove_x + instance.groove_width - instance.knob_width
-	instance.knob_y         = settings.y + instance.parrent_height / 2 - instance.knob_height / 2
-	instance.text_bg_width  = 50
-	instance.text_bg_height = instance.knob_height
-	instance.text_bg_x      = settings.x + instance.parrent_width - (instance.text_bg_width + 5)
-	instance.text_bg_y      = instance.knob_y
-	instance.id             = settings.id
+	instance.groove_x       = settings.x
+	instance.groove_y       = settings.y + instance.height / 2 - instance.groove_height / 2
+	instance.valueReference = settings.valueReference
+	instance.tableReference = settings.tableReference
 	instance.sliderRangeMax = settings.sliderRangeMax or 1
 	instance.sliderRangeMin = settings.sliderRangeMin or 0
 	return instance
@@ -39,16 +42,16 @@ function Slider:update(dt)
 		self.knob_x = self.groove_x
 	end
 
-	if self.knob_x + self.knob_width > self.groove_x + self.groove_width then
-		self.knob_x = self.groove_x + self.groove_width - self.knob_width
+	if self.knob_x + self.knob_width > self.groove_x + self.width then
+		self.knob_x = self.groove_x + self.width - self.knob_width
 	end
 
-	SliderSettings[self.id] = self.sliderRangeMin + ((self.knob_x - self.groove_x) / (self.groove_width - self.knob_width)) * (self.sliderRangeMax - self.sliderRangeMin)
+	self.tableReference[self.valueReference] = self.sliderRangeMin + ((self.knob_x - self.groove_x) / (self.width - self.knob_width)) * (self.sliderRangeMax - self.sliderRangeMin)
 end
 
 function Slider:drawGroove()
 	love.graphics.setColor(Colors.gray[700])
-	love.graphics.rectangle("fill", self.groove_x, self.groove_y, self.groove_width, self.groove_height)
+	love.graphics.rectangle("fill", self.groove_x, self.groove_y, self.width, self.groove_height)
 end
 
 function Slider:drawKnob()
@@ -59,30 +62,14 @@ function Slider:drawKnob()
 	love.graphics.reset()
 end
 
-function Slider:backgroundAmount()
-	love.graphics.setColor(Colors.gray[600])
-	love.graphics.rectangle("fill", self.text_bg_x, self.text_bg_y, self.text_bg_width, self.text_bg_height)
-	love.graphics.reset()
-end
-
-function Slider:text()
-	love.graphics.setFont(Percentage)
-	local percentage = math.floor(100 / ( (self.groove_width - self.knob_width) / (self.knob_x - self.groove_x)))
-	local width = Percentage:getWidth(tostring(percentage))
-	local height = Percentage:getHeight()
-	local x = self.text_bg_x + self.text_bg_width / 2 - width / 2
-	local y = self.text_bg_y + self.text_bg_height / 2 - height / 2
-	love.graphics.setColor(Colors.white)
-	love.graphics.print(percentage, x, y)
-	love.graphics.reset()
-	love.graphics.setFont(Default)
+function Slider:drawRec()
+	love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
 
 function Slider:draw()
 	self:drawGroove()
 	self:drawKnob()
-	self:backgroundAmount()
-	self:text()
+	-- self:drawRec()
 end
 
 return Slider

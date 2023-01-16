@@ -1,3 +1,5 @@
+local Settings = require("settings")
+
 ---@class Boid
 ---@field position any
 ---@field r number
@@ -101,9 +103,9 @@ function Boid:flock(boids)
 	local cohesion = self:cohesion(boids)
 	local separation = self:separation(boids)
 
-	alignment = alignment * SliderSettings["AlignmentFactor"]
-	cohesion = cohesion * SliderSettings["CohesionFactor"]
-	separation = separation * SliderSettings["SeparationFactor"]
+	alignment = alignment * Settings.sliderSettings["alignmentFactor"]
+	cohesion = cohesion * Settings.sliderSettings["cohesionFactor"]
+	separation = separation * Settings.sliderSettings["separationFactor"]
 
 	self.acceleration:add(alignment)
 	self.acceleration:add(cohesion)
@@ -114,6 +116,7 @@ function Boid:update(dt)
 	self.position:add(self.velocity)
 	self.velocity:add(self.acceleration)
 	self.velocity:setLimit_max(self.maxSpeed)
+	self.velocity:setLimit_min(self.minSpeed)
 	self.acceleration:mul(0)
 
 	-- if self.position.x > WINDOW_WIDTH or self.position.x < 0 then self.velocity.x = self.velocity.x * -1 end
