@@ -116,7 +116,7 @@ function Boid:update(dt)
 	self.position:add(self.velocity)
 	self.velocity:add(self.acceleration)
 	self.velocity:setLimit_max(self.maxSpeed)
-	self.velocity:setLimit_min(self.minSpeed)
+	-- self.velocity:setLimit_min(self.minSpeed)
 	self.acceleration:mul(0)
 
 	-- if self.position.x > WINDOW_WIDTH or self.position.x < 0 then self.velocity.x = self.velocity.x * -1 end

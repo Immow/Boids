@@ -20,4 +20,12 @@ function PositionElements:below(offset)
 	return self.y + self.height + offset
 end
 
+function PositionElements:debug()
+	if DEBUG then
+		love.graphics.setColor(1,0,0)
+		love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+		love.graphics.setColor(1,1,1)
+	end
+end
+
 return PositionElements

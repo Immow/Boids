@@ -52,6 +52,7 @@ end
 function TextBox:draw()
 	self:drawBackground()
 	self:drawText()
+	self:debug()
 end
 
 return TextBox

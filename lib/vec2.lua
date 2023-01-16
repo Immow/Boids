@@ -79,7 +79,7 @@ function Vec2:add(x, y)
 end
 
 function Vec2:div(x, y)
-	if type(x) == "table" then
+	if type(x) == "table" and x ~= 0 and y ~= 0 then
 		self.x = self.x / x.x
 		self.y = self.y / x.y
 	else

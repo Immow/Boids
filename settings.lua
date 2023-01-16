@@ -1,5 +1,5 @@
 local Settings = {
-	boidAmount = 200,
+	boidAmount = 400,
 	sliderSettings = {
 		alignmentFactor = 1.5,
 		cohesionFactor = 1,

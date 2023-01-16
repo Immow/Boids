@@ -1,16 +1,20 @@
 local newSlider = require("classes.slider")
 local newTextBox = require("classes.textbox")
+local newContainer = require("classes.container")
 local settings = require("settings")
 require("lib.positionElements")
 
 local Gui = {}
 local sliders = {}
 local textBoxes = {}
+local container
 
 function Gui:load()
+	container = newContainer.new({x = 0, y = WINDOW_HEIGHT - 100, width = WINDOW_WIDTH, height = 100})
+
 	local slider1 = newSlider.new({
-					x = 10,
-					y = 250,
+					x = container:getValue("x"),
+					y = container:getValue("y"),
 					height = 20,
 					width = 150,
 					valueReference = "alignmentFactor",
@@ -77,6 +81,7 @@ end
 
 
 function Gui:draw()
+	container:draw()
 	for i = 1, #sliders do
 		sliders[i]:draw()
 	end

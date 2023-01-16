@@ -33,9 +33,9 @@ function Slider:containsPoint(x, y)
 end
 
 function Slider:update(dt)
-	local x, y = love.mouse.getPosition()
-	if love.mouse.isDown(1) and self:containsPoint(x, y) then
-		self.knob_x = x - self.knob_width / 2
+	local mx, my = love.mouse.getPosition()
+	if love.mouse.isDown(1) and self:containsPoint(mx, my) then
+		self.knob_x = mx - self.knob_width / 2
 	end
 	
 	if self.knob_x < self.groove_x then
@@ -62,14 +62,10 @@ function Slider:drawKnob()
 	love.graphics.reset()
 end
 
-function Slider:drawRec()
-	love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
-end
-
 function Slider:draw()
 	self:drawGroove()
 	self:drawKnob()
-	-- self:drawRec()
+	self:debug()
 end
 
 return Slider
