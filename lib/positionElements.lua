@@ -10,14 +10,18 @@ function PositionElements:setPosition(x, y)
 	self.y = y
 end
 
-function PositionElements:right(offset)
-	offset = offset or 0
-	return self.x + self.width + offset
+function PositionElements:getPosition()
+	return self.x, self.y
 end
 
-function PositionElements:below(offset)
+function PositionElements:right(offset)
 	offset = offset or 0
-	return self.y + self.height + offset
+	return self.x + self.width + offset, self.y
+end
+
+function PositionElements:bottom(offset)
+	offset = offset or 0
+	return self.x, self.y + self.height + offset
 end
 
 function PositionElements:debug()

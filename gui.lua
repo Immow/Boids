@@ -5,16 +5,15 @@ local settings = require("settings")
 require("lib.positionElements")
 
 local Gui = {}
-local sliders = {}
-local textBoxes = {}
 local container
 
 function Gui:load()
 	container = newContainer.new({x = 0, y = WINDOW_HEIGHT - 100, width = WINDOW_WIDTH, height = 100})
 
 	local slider1 = newSlider.new({
-					x = container:getValue("x"),
-					y = container:getValue("y"),
+					position = "parent",
+					id = "slider1",
+					target_id = "parent",
 					height = 20,
 					width = 150,
 					valueReference = "alignmentFactor",
@@ -24,8 +23,10 @@ function Gui:load()
 				})
 				
 	local slider2 = newSlider.new({
-					x = slider1:getValue("x"),
-					y = slider1:below(10),
+					position = "bottom",
+					id = "slider2",
+					target_id = "slider1",
+					offset = 5,
 					height = 20,
 					width = 150,
 					valueReference = "cohesionFactor",
@@ -35,8 +36,10 @@ function Gui:load()
 				})
 				
 	local slider3 = newSlider.new({
-					x = slider2:getValue("x"),
-					y = slider2:below(10),
+					position = "bottom",
+					id = "slider3",
+					target_id = "slider2",
+					offset = 5,
 					height = 20,
 					width = 150,
 					valueReference = "separationFactor",
@@ -46,8 +49,10 @@ function Gui:load()
 				})
 
 	local textBox1 = newTextBox.new({
-						x = slider1:right(5),
-						y = slider1:getValue("y"),
+						position = "right",
+						id = "textBox1",
+						target_id = "slider1",
+						offset = 5,
 						width = 70,
 						height = 20,
 						valueReference = "alignmentFactor",
@@ -56,8 +61,10 @@ function Gui:load()
 					})
 
 	local textBox2 = newTextBox.new({
-						x = slider2:right(5),
-						y = slider2:getValue("y"),
+						position = "right",
+						id = "textBox2",
+						target_id = "slider2",
+						offset = 5,
 						width = 70,
 						height = 20,
 						valueReference = "cohesionFactor",
@@ -66,8 +73,10 @@ function Gui:load()
 					})
 
 	local textBox3 = newTextBox.new({
-						x = slider3:right(5),
-						y = slider3:getValue("y"),
+						position = "right",
+						id = "textBox3",
+						target_id = "slider3",
+						offset = 5,
 						width = 70,
 						height = 20,
 						valueReference = "separationFactor",
@@ -79,7 +88,6 @@ function Gui:load()
 		slider1, slider2, slider3, textBox1, textBox2, textBox3
 	)
 end
-
 
 function Gui:draw()
 	container:draw()
