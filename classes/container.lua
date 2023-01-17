@@ -13,25 +13,29 @@ function Container.new(settings)
 	instance.y      = settings.y or 0
 	instance.width  = settings.width or 100
 	instance.height = settings.height or 50
-	instance.childeren = {}
+	instance.children = {}
 	return instance
 end
 
-function Container:addChild(...)
+function Container:addChilds(...)
 	for i = 1, select("#", ...) do
 		local child = select(i, ...)
-		table.insert(self.childeren, child)
+		table.insert(self.children, child)
 	end
 end
 
+-- function Container:addChild(child)
+-- 	table.insert(self.children, child)
+-- end
+
 function Container:update(dt)
-	for _, child in ipairs(self.childeren) do
+	for _, child in pairs(self.children) do
 		child:update(dt)
 	end
 end
 
 function Container:draw()
-	for _, child in ipairs(self.childeren) do
+	for _, child in pairs(self.children) do
 		child:draw()
 	end
 	self:debug()

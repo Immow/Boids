@@ -55,4 +55,7 @@ function TextBox:draw()
 	self:debug()
 end
 
+function TextBox:update()
+end
+
 return TextBox

@@ -9,32 +9,6 @@ local sliders = {}
 local textBoxes = {}
 local container
 
--- FUNCTION TO PRINT TABLES
-function tprint (tbl, indent)
-	if not indent then indent = 0 end
-	local toprint = string.rep(" ", indent) .. "{\r\n"
-	indent = indent + 2 
-	for k, v in pairs(tbl) do
-		toprint = toprint .. string.rep(" ", indent)
-		if (type(k) == "number") then
-			toprint = toprint .. "[" .. k .. "] = "
-		elseif (type(k) == "string") then
-			toprint = toprint  .. k ..  "= "   
-		end
-		if (type(v) == "number") then
-			toprint = toprint .. v .. ",\r\n"
-		elseif (type(v) == "string") then
-			toprint = toprint .. "\"" .. v .. "\",\r\n"
-		elseif (type(v) == "table") then
-			toprint = toprint .. tprint(v, indent + 2) .. ",\r\n"
-		else
-			toprint = toprint .. "\"" .. tostring(v) .. "\",\r\n"
-		end
-	end
-	toprint = toprint .. string.rep(" ", indent-2) .. "}"
-	return toprint
-end
-
 function Gui:load()
 	container = newContainer.new({x = 0, y = WINDOW_HEIGHT - 100, width = WINDOW_WIDTH, height = 100})
 
@@ -100,11 +74,8 @@ function Gui:load()
 						tableReference = settings.sliderSettings,
 						font = Percentage
 					})
-
-	sliders = {slider1, slider2, slider3}
-	textBoxes = {textBox1, textBox2, textBox3}
 	
-	container:addChild(
+	container:addChilds(
 		slider1, slider2, slider3, textBox1, textBox2, textBox3
 	)
 end
@@ -112,24 +83,9 @@ end
 
 function Gui:draw()
 	container:draw()
-	-- for i = 1, #sliders do
-	-- 	sliders[i]:draw()
-	-- end
-	-- for i = 1, #textBoxes do
-	-- 	textBoxes[i]:draw()
-	-- end
 end
 
 function Gui:update(dt)
-	-- if love.keyboard.isDown("up") then
-	-- 	container.y = container.y - 1
-	-- elseif love.keyboard.isDown("down") then
-	-- 	container.y = container.y + 1
-	-- end
-
-	-- for i = 1, #sliders do
-	-- 	sliders[i]:update(dt)
-	-- end
 	container:update(dt)
 end
 
