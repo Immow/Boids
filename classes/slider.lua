@@ -15,7 +15,7 @@ function Slider.new(settings)
 	instance.height         = settings.height or 80
 	instance.knob_width     = settings.know_width or 20
 	instance.knob_height    = settings.knob_height or 20
-	instance.knob_x         = settings.x + instance.width - instance.knob_width
+	instance.knob_x         = settings.x + instance.width / 2 - instance.knob_width / 2
 	instance.knob_y         = settings.y + instance.height / 2 - instance.knob_height / 2
 	instance.groove_width   = settings.width
 	instance.groove_height  = 4
@@ -25,6 +25,8 @@ function Slider.new(settings)
 	instance.tableReference = settings.tableReference
 	instance.sliderRangeMax = settings.sliderRangeMax or 1
 	instance.sliderRangeMin = settings.sliderRangeMin or 0
+	instance.startX         = instance.x
+	instance.startY         = instance.y
 	return instance
 end
 
@@ -33,6 +35,18 @@ function Slider:containsPoint(x, y)
 end
 
 function Slider:update(dt)
+	if self.x ~= self.startX then
+		self.groove_x = self.x
+		self.knob_x = self.x + self.knob_x
+		self.startX = self.x
+	end
+
+	if self.y ~= self.startY then
+		self.groove_y = self.y + self.height / 2 - self.groove_height / 2
+		self.knob_y = self.y + self.height / 2 - self.knob_height / 2
+		self.startY = self.y
+	end
+
 	local mx, my = love.mouse.getPosition()
 	if love.mouse.isDown(1) and self:containsPoint(mx, my) then
 		self.knob_x = mx - self.knob_width / 2

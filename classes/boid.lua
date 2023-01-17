@@ -113,7 +113,7 @@ function Boid:flock(boids)
 end
 
 function Boid:update(dt)
-	self.position:add(self.velocity)
+	self.position:add(self.velocity * (dt * 40))
 	self.velocity:add(self.acceleration)
 	self.velocity:setLimit_max(self.maxSpeed)
 	-- self.velocity:setLimit_min(self.minSpeed)

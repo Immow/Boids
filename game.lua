@@ -55,7 +55,7 @@ function Game:update(dt)
 		boid:update(dt)
 	end
 	Gui:update(dt)
-	love.timer.sleep(1/60)
+	-- love.timer.sleep(1/150)
 end
 
 return Game

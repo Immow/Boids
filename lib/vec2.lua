@@ -51,6 +51,9 @@ Vec2.__mul = function (a, b)
 end
 
 Vec2.__div = function (a, b)
+	if a.x == 0 or a.y == 0 or b.x == 0 or b.y == 0 then
+		error("divide by zero")
+	end
 	if type(a) == "table" and type(b) == "table" then
 		return Vec2(a.x / b.x, a.y / b.y)
 	elseif type(a) == "table" then
@@ -101,6 +104,10 @@ function Vec2:mul(x, y)
 end
 
 function Vec2:sub(x, y)
+	if x == 0 or y == 0 then
+		error("divide by 0")
+	end
+
 	if type(x) == "table" then
 		self.x = self.x - x.x
 		self.y = self.y - x.y
