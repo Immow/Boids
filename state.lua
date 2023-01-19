@@ -51,4 +51,8 @@ function State:keypressed(key,scancode,isrepeat)
 	if scenes[currentScene].keypressed then scenes[currentScene]:keypressed(key,scancode,isrepeat) end
 end
 
+function State:resize()
+	if scenes[currentScene].resize then scenes[currentScene]:resize() end
+end
+
 return State

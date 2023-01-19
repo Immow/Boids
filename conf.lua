@@ -10,5 +10,5 @@ function love.conf(t)
 	t.modules.physics = false
 	t.externalstorage = true
 	t.window.vsync = 0
-	t.window.resizable = false
+	t.window.resizable = true
 end
