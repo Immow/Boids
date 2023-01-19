@@ -37,17 +37,34 @@ function Game:keypressed(key,scancode,isrepeat)
 	end
 end
 
+function Game:drawAlignmentPerceptionRadius(boid)
+	love.graphics.setColor(0,1,0)
+	love.graphics.circle("line", boid.position.x, boid.position.y, Settings.sliderSettings.alignment.perceptionRadius)
+end
+
+function Game:drawCohesionPerceptionRadius(boid)
+	love.graphics.setColor(0,0,1)
+	love.graphics.circle("line", boid.position.x, boid.position.y, Settings.sliderSettings.cohesion.perceptionRadius)
+end
+
+function Game:drawSeparationPerceptionRadius(boid)
+	love.graphics.setColor(1,1,0)
+	love.graphics.circle("line", boid.position.x, boid.position.y, Settings.sliderSettings.separation.perceptionRadius)
+end
+
 function Game:draw()
 	local totalXVelocity = 0
 	local totalYVelocity = 0
 	for i, boid in ipairs(self.boids) do
 		if i == 1 then
-			love.graphics.setColor(1,0,0)
+			self:drawAlignmentPerceptionRadius(boid)
+			self:drawCohesionPerceptionRadius(boid)
+			self:drawSeparationPerceptionRadius(boid)
+			boid:draw()
 		else
 			love.graphics.setColor(1,1,1)
+			boid:draw()
 		end
-		boid:draw()
-		love.graphics.setColor(1,1,1)
 		totalXVelocity = totalXVelocity + boid.velocity.x
 		totalYVelocity = totalYVelocity + boid.velocity.y
 	end

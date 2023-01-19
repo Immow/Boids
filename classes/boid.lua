@@ -29,7 +29,7 @@ function Boid.new(settings)
 end
 
 function Boid:align(boids)
-	local perceptionRadius = 25
+	local perceptionRadius = Settings.sliderSettings.alignment.perceptionRadius
 	local steering = Vec2()
 	local total = 0
 
@@ -50,7 +50,7 @@ function Boid:align(boids)
 end
 
 function Boid:cohesion(boids)
-	local perceptionRadius = 50
+	local perceptionRadius = 20
 	local steering = Vec2()
 	local total = 0
 
@@ -72,7 +72,7 @@ function Boid:cohesion(boids)
 end
 
 function Boid:separation(boids)
-	local perceptionRadius = 24
+	local perceptionRadius = 20
 	local steering = Vec2()
 	local total = 0
 
@@ -103,9 +103,9 @@ function Boid:flock(boids)
 	local cohesion = self:cohesion(boids)
 	local separation = self:separation(boids)
 
-	alignment = alignment * Settings.sliderSettings["alignmentFactor"]
-	cohesion = cohesion * Settings.sliderSettings["cohesionFactor"]
-	separation = separation * Settings.sliderSettings["separationFactor"]
+	alignment = alignment * Settings.sliderSettings.alignment["alignmentFactor"]
+	cohesion = cohesion * Settings.sliderSettings.cohesion["cohesionFactor"]
+	separation = separation * Settings.sliderSettings.separation["separationFactor"]
 
 	self.acceleration:add(alignment)
 	self.acceleration:add(cohesion)

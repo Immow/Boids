@@ -1,5 +1,6 @@
 local PositionElements = require("lib.positionElements")
 local s = require("settings")
+local mathx = require("lib.math")
 
 -- LuaFormatter off
 
@@ -43,13 +44,14 @@ function TextBox:drawText()
 	love.graphics.setFont(self.font)
 	local text = self.tableReference[self.valueReference]
 	-- local percentage = math.floor(100 / ( (self.width - self.knob_width) / (self.knob_x - self.groove_x)))
-	local percentage = math.floor(text / s.sliderSettings.sliderRangeMax * 100)
-	local width = self.font:getWidth(percentage)
+	-- local percentage = math.floor(text / s.sliderSettings.sliderRangeMax * 100)
+	local width = self.font:getWidth(mathx.to_precision(text, 2))
 	local height = self.font:getHeight()
 	local x = self.x + self.width / 2 - width / 2
 	local y = self.y + self.height / 2 - height / 2
 	love.graphics.setColor(Colors.white)
-	love.graphics.print(tostring(percentage), x, y)
+	-- love.graphics.print(tostring(percentage), x, y)
+	love.graphics.print(mathx.to_precision(text, 2), x, y)
 	love.graphics.reset()
 	love.graphics.setFont(Default)
 end

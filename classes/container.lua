@@ -11,7 +11,7 @@ setmetatable(Container, Container_meta)
 setmetatable(Container_meta, PositionElements)
 
 ---@class Container
----@param settings table x, y, width, height
+---@param settings {x: integer, y: integer, width: integer, height: integer}
 function Container.new(settings)
 	local instance = setmetatable({}, Container)
 	instance.x        = settings.x or 0
@@ -19,6 +19,7 @@ function Container.new(settings)
 	instance.width    = settings.width or 100
 	instance.height   = settings.height or 50
 	instance.children = {}
+	instance.childIndex = {}
 	return instance
 end
 
@@ -27,19 +28,20 @@ end
 function Container:addChilds(...)
 	for i = 1, select("#", ...) do
 		local child = select(i, ...)
-		self.children[child.id] = child
+		self.children[i] = child
+		self.childIndex[child.id] = i
 	end
 end
 
 function Container:positionChildren(dt)
-	for _, child in pairs(self.children) do
+	for i, child in ipairs(self.children) do
 		if child.position == "parent" then
 			child:setPosition(self.x, self.y)
 		elseif child.position == "bottom" then
-			local x, y = self.children[child.target_id]:bottom(child.offsetY)
+			local x, y = self.children[self.childIndex[child.target_id]]:bottom(child.offsetY)
 			child:setPosition(x, y)
 		elseif child.position == "right" then
-			local x, y = self.children[child.target_id]:right(child.offsetX)
+			local x, y = self.children[self.childIndex[child.target_id]]:right(child.offsetX)
 			child:setPosition(x, y)
 		end
 		child:update(dt)
@@ -57,7 +59,7 @@ function Container:update(dt)
 end
 
 function Container:draw()
-	for _, child in pairs(self.children) do
+	for _, child in ipairs(self.children) do
 		child:draw()
 	end
 	self:debug()

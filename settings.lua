@@ -1,11 +1,9 @@
 local Settings = {
 	boidAmount = 400,
 	sliderSettings = {
-		alignmentFactor = 1.5,
-		cohesionFactor = 1,
-		separationFactor = 2,
-		sliderRangeMax = 4,
-		sliderRangeMin = 0,
+		alignment = {alignmentFactor = 1.5, perceptionRadius = 1},
+		cohesion = {cohesionFactor = 1, perceptionRadius = 1},
+		separation = {separationFactor = 2, perceptionRadius = 1},
 	}
 }
 
