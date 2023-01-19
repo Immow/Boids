@@ -82,6 +82,7 @@ function Vec2:add(x, y)
 end
 
 function Vec2:div(x, y)
+	if x == 0 then error("divide by zero") end
 	if type(x) == "table" and x ~= 0 then
 		self.x = self.x / x.x
 		self.y = self.y / x.y
