@@ -1,5 +1,7 @@
 local PositionElements = require("lib.positionElements")
 
+-- LuaFormatter off
+
 local Slider = {}
 local Slider_meta = {}
 Slider.__index = Slider
@@ -16,8 +18,8 @@ function Slider.new(settings)
 	instance.position       = settings.position
 	instance.id             = settings.id
 	instance.target_id      = settings.target_id
-	instance.offsetX         = settings.offsetX or 0
-	instance.offsetY         = settings.offsetY or 0
+	instance.offsetX        = settings.offsetX or 0
+	instance.offsetY        = settings.offsetY or 0
 	instance.width          = settings.width or 200
 	instance.height         = settings.height or 80
 	instance.knob_width     = settings.knob_width or 20
@@ -36,6 +38,8 @@ function Slider.new(settings)
 	instance.startY         = instance.y
 	return instance
 end
+
+-- LuaFormatter on
 
 function Slider:containsPoint(x, y)
 	return x >= self.knob_x and x <= self.knob_x + self.knob_width and y >= self.knob_y and y <= self.knob_y + self.knob_height

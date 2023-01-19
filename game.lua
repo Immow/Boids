@@ -43,8 +43,8 @@ function Game:draw()
 		totalXVelocity = totalXVelocity + boid.velocity.x
 		totalYVelocity = totalYVelocity + boid.velocity.y
 	end
-	love.graphics.print("Average Xvel.: "..tostring(mathx.to_precision(totalXVelocity / Settings.boidAmount, 2)), 5)
-	love.graphics.print("Average Yvel.: "..tostring(mathx.to_precision(totalYVelocity / Settings.boidAmount, 2)), 5, 20)
+	love.graphics.print("Average Xvel.: "..mathx.to_precision(totalXVelocity / Settings.boidAmount, 2), 5, 0)
+	love.graphics.print("Average Yvel.: "..mathx.to_precision(totalYVelocity / Settings.boidAmount, 2), 5, 20)
 	love.graphics.print("FPS: "..love.timer.getFPS(), 5, 40)
 	Gui:draw()
 end

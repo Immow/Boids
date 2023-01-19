@@ -12,9 +12,9 @@ Vec2_meta.__call = function(self, x, y)
 	}, Vec2)
 end
 
--- Vec2.__tostring = function (self)
--- 	return "Vec2 - X: "..self.x.." Y: "..self.y
--- end
+Vec2.__tostring = function (self)
+	return "Vec2 - X: "..self.x.." Y: "..self.y
+end
 
 Vec2.__newindex = function (self, key, value)
 	error("Can't assign key '"..key.."', valid keys are 'x' & 'y'" )
