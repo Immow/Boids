@@ -49,29 +49,6 @@ function Boid:align(boids)
 	return steering
 end
 
-function Boid:separation(boids)
-	local perceptionRadius = 24
-	local steering = Vec2()
-	local total = 0
-
-	for _, other in ipairs(boids) do
-		local d = self.position:dist(other.position)
-		if other ~= self and d < perceptionRadius then
-			local diff = self.position - other.position
-			diff:div(d * d)
-			steering:add(diff)
-			total = total + 1
-		end
-	end
-	if total > 0 then
-		steering:div(total)
-		steering:setMag(self.maxSpeed)
-		steering:sub(self.velocity)
-		steering:setLimit_max(self.maxForceSeperate)
-	end
-	return steering
-end
-
 function Boid:cohesion(boids)
 	local perceptionRadius = 50
 	local steering = Vec2()
@@ -90,6 +67,29 @@ function Boid:cohesion(boids)
 		steering:setMag(self.maxSpeed)
 		steering:sub(self.velocity)
 		steering:setLimit_max(self.maxForceCohesion)
+	end
+	return steering
+end
+
+function Boid:separation(boids)
+	local perceptionRadius = 24
+	local steering = Vec2()
+	local total = 0
+
+	for _, other in ipairs(boids) do
+		local d = self.position:dist(other.position)
+		if d ~= 0 and other ~= self and d < perceptionRadius then
+			local diff = self.position - other.position
+			diff:div(d * d)
+			steering:add(diff)
+			total = total + 1
+		end
+	end
+	if total > 0 then
+		steering:div(total)
+		steering:setMag(self.maxSpeed)
+		steering:sub(self.velocity)
+		steering:setLimit_max(self.maxForceSeperate)
 	end
 	return steering
 end

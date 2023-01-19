@@ -26,6 +26,14 @@ end
 function Game:keypressed(key,scancode,isrepeat)
 	if scancode == "space" then
 		love.event.quit("restart")
+	elseif scancode == "d" then
+		love.filesystem.write("log.txt", "")
+		for _, boid in ipairs(self.boids) do
+			local line = boid.position.x
+			if string.match(line, "nan") then
+				love.filesystem.append("log.txt", line)
+			end
+		end
 	end
 end
 
