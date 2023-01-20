@@ -60,6 +60,7 @@ function Game:draw()
 			self:drawAlignmentPerceptionRadius(boid)
 			self:drawCohesionPerceptionRadius(boid)
 			self:drawSeparationPerceptionRadius(boid)
+			love.graphics.setColor(1,0,0)
 			boid:draw()
 		else
 			love.graphics.setColor(1,1,1)

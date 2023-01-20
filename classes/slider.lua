@@ -10,7 +10,7 @@ setmetatable(Slider, Slider_meta)
 setmetatable(Slider_meta, PositionElements)
 
 ---@class TextBox
----@param settings {x: integer, y: integer, position: string, id: string, target_id: string, offsetX: integer, offsetY: integer, width: integer, height: integer, knob_width: integer, knob_height: integer, knob_x: integer, knob_y: integer, groove_width: integer, groove_height: integer, groove_x: integer, groove_y: integer, valueReference: string, tableReference: table, sliderRangeMax: integer, sliderRangeMin: integer, startX: integer, startY: integer, startValue: integer}
+---@param settings {x: integer, y: integer, position: string, id: string, target_id: string, offset: integer, width: integer, height: integer, knob_width: integer, knob_height: integer, knob_x: integer, knob_y: integer, groove_width: integer, groove_height: integer, groove_x: integer, groove_y: integer, valueReference: string, tableReference: table, sliderRangeMax: integer, sliderRangeMin: integer, startX: integer, startY: integer, startValue: integer}
 function Slider.new(settings)
 	local instance = setmetatable({}, Slider)
 	instance.x              = settings.x or 0
@@ -18,8 +18,7 @@ function Slider.new(settings)
 	instance.position       = settings.position
 	instance.id             = settings.id
 	instance.target_id      = settings.target_id
-	instance.offsetX        = settings.offsetX or 0
-	instance.offsetY        = settings.offsetY or 0
+	instance.offset         = settings.offset or 0
 	instance.width          = settings.width or 200
 	instance.height         = settings.height or 80
 	instance.knob_width     = settings.knob_width or 20

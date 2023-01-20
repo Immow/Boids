@@ -1,11 +1,13 @@
 local newSlider = require("classes.slider")
 local newTextBox = require("classes.textbox")
 local newContainer = require("classes.container")
+local newBlock = require("classes.block")
 local settings = require("settings")
 require("lib.positionElements")
 
 local Gui = {}
 local container
+local c1
 
 function Gui:load()
 	container = newContainer.new({
@@ -33,7 +35,7 @@ function Gui:load()
 		position = "bottom",
 		id = "slider2",
 		target_id = "slider1",
-		offsetY = 5,
+		offset = 5,
 		height = 20,
 		width = 150,
 		valueReference = "cohesionFactor",
@@ -47,7 +49,7 @@ function Gui:load()
 		position = "bottom",
 		id = "slider3",
 		target_id = "slider2",
-		offsetY = 5,
+		offset = 5,
 		height = 20,
 		width = 150,
 		valueReference = "separationFactor",
@@ -61,7 +63,7 @@ function Gui:load()
 		position = "right",
 		id = "textBox1",
 		target_id = "slider1",
-		offsetX = 5,
+		offset = 5,
 		width = 70,
 		height = 20,
 		valueReference = "alignmentFactor",
@@ -73,7 +75,7 @@ function Gui:load()
 		position = "right",
 		id = "textBox2",
 		target_id = "slider2",
-		offsetX = 5,
+		offset = 5,
 		width = 70,
 		height = 20,
 		valueReference = "cohesionFactor",
@@ -85,7 +87,7 @@ function Gui:load()
 		position = "right",
 		id = "textBox3",
 		target_id = "slider3",
-		offsetX = 5,
+		offset = 5,
 		width = 70,
 		height = 20,
 		valueReference = "separationFactor",
@@ -96,7 +98,7 @@ function Gui:load()
 	local slider4 = newSlider.new({
 		position = "right",
 		id = "slider4",
-		offsetX = 5,
+		offset = 5,
 		target_id = "textBox1",
 		height = 20,
 		width = 150,
@@ -111,7 +113,7 @@ function Gui:load()
 		position = "right",
 		id = "slider5",
 		target_id = "textBox2",
-		offsetX = 5,
+		offset = 5,
 		height = 20,
 		width = 150,
 		valueReference = "perceptionRadius",
@@ -125,7 +127,7 @@ function Gui:load()
 		position = "right",
 		id = "slider6",
 		target_id = "textBox3",
-		offsetX = 5,
+		offset = 5,
 		height = 20,
 		width = 150,
 		valueReference = "perceptionRadius",
@@ -139,7 +141,7 @@ function Gui:load()
 		position = "right",
 		id = "textBox4",
 		target_id = "slider4",
-		offsetX = 5,
+		offset = 5,
 		width = 70,
 		height = 20,
 		valueReference = "perceptionRadius",
@@ -151,7 +153,7 @@ function Gui:load()
 		position = "right",
 		id = "textBox5",
 		target_id = "slider5",
-		offsetX = 5,
+		offset = 5,
 		width = 70,
 		height = 20,
 		valueReference = "perceptionRadius",
@@ -163,7 +165,7 @@ function Gui:load()
 		position = "right",
 		id = "textBox6",
 		target_id = "slider6",
-		offsetX = 5,
+		offset = 5,
 		width = 70,
 		height = 20,
 		valueReference = "perceptionRadius",
@@ -171,13 +173,20 @@ function Gui:load()
 		font = Percentage
 	})
 
-	container:addChilds(slider1, slider2, slider3, textBox1, textBox2, textBox3, slider4, slider5, slider6, textBox4, textBox5, textBox6)
+	container:addChilds(slider1, slider2, slider3, textBox1, textBox2, textBox3, slider4, slider5, slider6, textBox4,
+	                    textBox5, textBox6)
 end
 
-function Gui:draw() container:draw() end
+function Gui:draw()
+	container:draw()
+end
 
-function Gui:update(dt) container:update(dt) end
+function Gui:update(dt)
+	container:update(dt)
+end
 
-function Gui:resize() container:resize() end
+function Gui:resize()
+	container:resize()
+end
 
 return Gui

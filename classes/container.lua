@@ -20,6 +20,7 @@ function Container.new(settings)
 	instance.height   = settings.height or 50
 	instance.children = {}
 	instance.childIndex = {}
+	instance.id = "container"
 	return instance
 end
 
@@ -38,10 +39,16 @@ function Container:positionChildren(dt)
 		if child.position == "parent" then
 			child:setPosition(self.x, self.y)
 		elseif child.position == "bottom" then
-			local x, y = self.children[self.childIndex[child.target_id]]:bottom(child.offsetY)
+			local x, y = self.children[self.childIndex[child.target_id]]:bottom(child.offset)
 			child:setPosition(x, y)
 		elseif child.position == "right" then
-			local x, y = self.children[self.childIndex[child.target_id]]:right(child.offsetX)
+			local x, y = self.children[self.childIndex[child.target_id]]:right(child.offset)
+			child:setPosition(x, y)
+		elseif child.position == "left" then
+			local x, y = self.children[self.childIndex[child.target_id]]:left(child.offset, child.width)
+			child:setPosition(x, y)
+		elseif child.position == "top" then
+			local x, y = self.children[self.childIndex[child.target_id]]:top(child.offset, child.height)
 			child:setPosition(x, y)
 		end
 		child:update(dt)

@@ -12,7 +12,7 @@ setmetatable(TextBox, TextBox_meta)
 setmetatable(TextBox_meta, PositionElements)
 
 ---@class TextBox
----@param settings {x: integer, y: integer, width: integer, height: integer, position: string, id: string, target_id: string, offsetX: integer, offsetY: integer, font: any, valueReference: any, tableReference: any, text: string, displayAsPercentage: boolean}
+---@param settings {x: integer, y: integer, width: integer, height: integer, position: string, id: string, target_id: string, offset: integer, font: any, valueReference: any, tableReference: any, text: string, displayAsPercentage: boolean}
 function TextBox.new(settings)
 	local instance = setmetatable({}, TextBox)
 	instance.x                   = settings.x or 0
@@ -22,8 +22,7 @@ function TextBox.new(settings)
 	instance.position            = settings.position
 	instance.id                  = settings.id
 	instance.target_id           = settings.target_id
-	instance.offsetX             = settings.offsetX or 0
-	instance.offsetY             = settings.offsetY or 0
+	instance.offset              = settings.offset or 0
 	instance.font                = settings.font
 	instance.valueReference      = settings.valueReference
 	instance.tableReference      = settings.tableReference
