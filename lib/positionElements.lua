@@ -14,24 +14,20 @@ function PositionElements:getPosition()
 	return self.x, self.y
 end
 
-function PositionElements:right(offset)
-	offset = offset or 0
-	return self.x + self.width + offset, self.y
+function PositionElements:right(x, y)
+	return self.x + self.width + x, self.y + y
 end
 
-function PositionElements:bottom(offset)
-	offset = offset or 0
-	return self.x, self.y + self.height + offset
+function PositionElements:bottom(x, y)
+	return self.x + x, self.y + self.height + y
 end
 
-function PositionElements:left(offset, width)
-	offset = offset or 0
-	return self.x - (offset + width), self.y
+function PositionElements:left(x, y, width)
+	return self.x - (x + width), self.y + y
 end
 
-function PositionElements:top(offset, height)
-	offset = offset or 0
-	return self.x, self.y - (height + offset)
+function PositionElements:top(x, y, height)
+	return self.x + x, self.y - (height + y)
 end
 
 function PositionElements:debug()

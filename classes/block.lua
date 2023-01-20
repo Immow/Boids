@@ -10,7 +10,7 @@ setmetatable(TextBox, TextBox_meta)
 setmetatable(TextBox_meta, PositionElements)
 
 ---@class TextBox
----@param settings {x: integer, y: integer, width: integer, height: integer, position: string, id: string, target_id: string, offset: integer}
+---@param settings {x: integer, y: integer, width: integer, height: integer, position: string, id: string, target_id: string, offsetX: integer, offsetY: integer}
 function TextBox.new(settings)
 	local instance = setmetatable({}, TextBox)
 	instance.x                   = settings.x or 0
@@ -20,7 +20,8 @@ function TextBox.new(settings)
 	instance.position            = settings.position
 	instance.id                  = settings.id
 	instance.target_id           = settings.target_id
-	instance.offset              = settings.offset or 0
+	instance.offsetX             = settings.offsetX or 0
+	instance.offsetY             = settings.offsetY or 0
 	return instance
 end
 

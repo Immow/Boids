@@ -16,11 +16,11 @@ function Game:load()
 end
 
 function Game:mousepressed(mx, my, mouseButton)
-
+	Gui:mousepressed(mx, my, mouseButton)
 end
 
 function Game:mousereleased(x,y,button,istouch,presses)
-
+	Gui:mousereleased(x,y,button,istouch,presses)
 end
 
 function Game:keypressed(key,scancode,isrepeat)
@@ -35,6 +35,7 @@ function Game:keypressed(key,scancode,isrepeat)
 			end
 		end
 	end
+	Gui:keypressed(key,scancode,isrepeat)
 end
 
 function Game:drawAlignmentPerceptionRadius(boid)

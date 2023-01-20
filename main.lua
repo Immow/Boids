@@ -1,5 +1,6 @@
 State = require("state")
 Colors = require("lib.colors")
+Flux = require("lib.flux")
 require("constants")
 require("globals")
 
@@ -33,4 +34,5 @@ end
 
 function love.update(dt)
 	State:update(dt)
+	Flux.update(dt)
 end

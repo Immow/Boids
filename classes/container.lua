@@ -36,22 +36,46 @@ end
 
 function Container:positionChildren(dt)
 	for i, child in ipairs(self.children) do
-		if child.position == "parent" then
-			child:setPosition(self.x, self.y)
-		elseif child.position == "bottom" then
-			local x, y = self.children[self.childIndex[child.target_id]]:bottom(child.offset)
+		if child.position == "TL-P" then
+			child:setPosition(self.x + child.offsetX, self.y + child.offsetY)
+		elseif child.position == "TR-P" then
+			child:setPosition(self.x + self.width - child.width + child.offsetX, self.y + child.offsetY)
+		elseif child.position == "BR-P" then
+			child:setPosition(self.x + self.width - child.width + child.offsetX, self.y + self.height - child.height + child.offsetY)
+		elseif child.position == "BL-P" then
+			child:setPosition(self.x + child.offsetX, self.y + self.height - child.height + child.offsetY)
+		elseif child.position == "TM-P" then
+			child:setPosition(self.x + self.width / 2 + child.offsetX - child.width / 2, self.y + child.offsetY)
+		elseif child.position == "B-C" then
+			local x, y = self.children[self.childIndex[child.target_id]]:bottom(child.offsetX, child.offsetY)
 			child:setPosition(x, y)
-		elseif child.position == "right" then
-			local x, y = self.children[self.childIndex[child.target_id]]:right(child.offset)
+		elseif child.position == "R-C" then
+			local x, y = self.children[self.childIndex[child.target_id]]:right(child.offsetX, child.offsetY)
 			child:setPosition(x, y)
-		elseif child.position == "left" then
-			local x, y = self.children[self.childIndex[child.target_id]]:left(child.offset, child.width)
+		elseif child.position == "L-C" then
+			local x, y = self.children[self.childIndex[child.target_id]]:left(child.offsetX, child.offsetY, child.width)
 			child:setPosition(x, y)
-		elseif child.position == "top" then
-			local x, y = self.children[self.childIndex[child.target_id]]:top(child.offset, child.height)
+		elseif child.position == "T-C" then
+			local x, y = self.children[self.childIndex[child.target_id]]:top(child.offsetX, child.offsetY, child.height)
 			child:setPosition(x, y)
 		end
 		child:update(dt)
+	end
+end
+
+function Container:mousepressed(x, y, button, istouch, presses)
+	for _, child in ipairs(self.children) do
+		if child.mousepressed then
+			child:mousepressed(x, y, button, istouch, presses)
+		end
+	end
+end
+
+function Container:mousereleased(x, y, button, istouch, presses)
+	for _, child in ipairs(self.children) do
+		if child.mousereleased then
+			child:mousereleased(x, y, button, istouch, presses)
+		end
 	end
 end
 
