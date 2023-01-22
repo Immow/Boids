@@ -28,31 +28,93 @@ function State.getScene()
 end
 
 function State:load()
-	if scenes[currentScene].load then scenes[currentScene]:load() end
+	if scenes[currentScene].load then
+		scenes[currentScene]:load()
+	end
 end
 
 function State:update(dt)
-	if scenes[currentScene].update then scenes[currentScene]:update(dt) end
+	if scenes[currentScene].update then
+		scenes[currentScene]:update(dt)
+	end
 end
 
 function State:draw()
-	if scenes[currentScene].draw then scenes[currentScene]:draw() end
+	if scenes[currentScene].draw then
+		scenes[currentScene]:draw()
+	end
 end
 
-function State:mousepressed(x,y,button,istouch,presses)
-	if scenes[currentScene].mousepressed then scenes[currentScene]:mousepressed(x,y,button,istouch,presses) end
+function State:mousepressed(x, y, button, istouch, presses)
+	if scenes[currentScene].mousepressed then
+		scenes[currentScene]:mousepressed(x, y, button, istouch, presses)
+	end
 end
 
-function State:mousereleased(x,y,button,istouch,presses)
-	if scenes[currentScene].mousereleased then scenes[currentScene]:mousereleased(x,y,button,istouch,presses) end
+function State:mousereleased(x, y, button, istouch, presses)
+	if scenes[currentScene].mousereleased then
+		scenes[currentScene]:mousereleased(x, y, button, istouch, presses)
+	end
 end
 
-function State:keypressed(key,scancode,isrepeat)
-	if scenes[currentScene].keypressed then scenes[currentScene]:keypressed(key,scancode,isrepeat) end
+function State:keypressed(key, scancode, isrepeat)
+	if scenes[currentScene].keypressed then
+		scenes[currentScene]:keypressed(key, scancode, isrepeat)
+	end
+end
+
+function State:keyreleased(key, scancode)
+	if scenes[currentScene].keyreleased then
+		scenes[currentScene]:keyreleased(key, scancode)
+	end
 end
 
 function State:resize()
-	if scenes[currentScene].resize then scenes[currentScene]:resize() end
+	if scenes[currentScene].resize then
+		scenes[currentScene]:resize()
+	end
+end
+
+function State:mousemoved(x, y, dx, dy, istouch)
+	if scenes[currentScene].mousemoved then
+		scenes[currentScene]:mousemoved(x, y, dx, dy, istouch)
+	end
+end
+
+function State:wheelmoved(x, y)
+	if scenes[currentScene].mousemoved then
+		scenes[currentScene]:mousemoved(x, y)
+	end
+end
+
+function State:quit()
+	if scenes[currentScene].quit then
+		scenes[currentScene]:quit()
+	end
+end
+
+function State:touchpressed(id,x,y,dx,dy,pressure)
+	if scenes[currentScene].touchpressed then
+		scenes[currentScene]:touchpressed(id,x,y,dx,dy,pressure)
+	end
+end
+
+function State:touchreleased(id,x,y,dx,dy,pressure)
+	if scenes[currentScene].touchreleased then
+		scenes[currentScene]:touchreleased(id,x,y,dx,dy,pressure)
+	end
+end
+
+function State:touchmoved(id,x,y,dx,dy,pressure)
+	if scenes[currentScene].touchmoved then
+		scenes[currentScene]:touchmoved(id,x,y,dx,dy,pressure)
+	end
+end
+
+function State:textinput(text)
+	if scenes[currentScene].textinput then
+		scenes[currentScene]:textinput(text)
+	end
 end
 
 return State

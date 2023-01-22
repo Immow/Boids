@@ -21,6 +21,10 @@ function love.mousereleased(mx, my, mouseButton)
 	State:mousereleased(mx, my, mouseButton)
 end
 
+function love.mousemoved(x, y, dx, dy, istouch)
+	State:mousemoved(x, y, dx, dy, istouch)
+end
+
 function love.keypressed(key,scancode,isrepeat)
 	State:keypressed(key,scancode,isrepeat)
 	if scancode == "space" then

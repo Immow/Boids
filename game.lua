@@ -23,6 +23,10 @@ function Game:mousereleased(x,y,button,istouch,presses)
 	Gui:mousereleased(x,y,button,istouch,presses)
 end
 
+function Game:mousemoved(x, y, dx, dy, istouch)
+	Gui:mousemoved(x, y, dx, dy, istouch)
+end
+
 function Game:keypressed(key,scancode,isrepeat)
 	if scancode == "space" then
 		love.event.quit("restart")
