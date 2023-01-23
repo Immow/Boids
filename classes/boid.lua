@@ -96,19 +96,9 @@ function Boid:separation(boids)
 end
 
 function Boid:flock(boids)
-	-- self.acceleration:add(self:align(boids))
-	-- self.acceleration:add(self:cohesion(boids))
-	-- self.acceleration:add(self:separation(boids))
-
 	local alignment = self:align(boids)
 	local cohesion = self:cohesion(boids)
 	local separation = self:separation(boids)
-
-	-- print(Gui.container.children[1].children[1]:getValue())
-	-- print(Gui.sliders.slider1:getValue())
-	-- pass in the id of a slider aka slider1
-	-- we store the child in some table and the id will the named key --> where child located
-	-- child id = slider1..  childLocation = {slider1 = }
 
 	alignment = alignment * Gui.sliders.slider1:getValue()
 	cohesion = cohesion * Gui.sliders.slider2:getValue()
