@@ -6,7 +6,7 @@ local settings = require("settings")
 local newButton = require("classes.button")
 require("lib.positionElements")
 
-local Gui = {container = {}, sliders = {}}
+local Gui = {container = {}, sliders = {}, textBox = {}}
 
 function Gui:load()
 	self.sliders.slider1 = newSlider.new({
@@ -20,8 +20,8 @@ function Gui:load()
 
 	self.sliders.slider2 = newSlider.new({
 		offset_bottom = 5,
-		h = 20,
 		w = 150,
+		h = 20,
 		sliderRangeMax = 4,
 		sliderRangeMin = 0,
 		startValue = 0.5
@@ -37,8 +37,8 @@ function Gui:load()
 
 	self.sliders.slider4 = newSlider.new({
 		offset_bottom = 5,
-		h = 20,
 		w = 150,
+		h = 20,
 		sliderRangeMax = 1,
 		sliderRangeMin = 0,
 		startValue = 0.5
@@ -46,26 +46,55 @@ function Gui:load()
 
 	self.sliders.slider5 = newSlider.new({
 		offset_bottom = 5,
-		h = 20,
 		w = 150,
+		h = 20,
 		sliderRangeMax = 1,
 		sliderRangeMin = 0,
 		startValue = 0.5
 	})
 
 	self.sliders.slider6 = newSlider.new({
-		h = 20,
 		w = 150,
+		h = 20,
 		sliderRangeMax = 1,
 		sliderRangeMin = 0,
 		startValue = 0.5
+	})
+
+	self.textBox.textBox1 = newTextBox.new({
+		offset_bottom = 5,
+		offset_left = 5,
+		offset_right = 5,
+		w = 100,
+		h = 20,
+		text = "test",
+		font = Percentage
+	})
+
+	self.textBox.textBox2 = newTextBox.new({
+		offset_bottom = 5,
+		offset_left = 5,
+		offset_right = 5,
+		w = 100,
+		h = 20,
+		text = "test",
+		font = Percentage
+	})
+
+	self.textBox.textBox3 = newTextBox.new({
+		offset_left = 5,
+		-- offset_right = 5,
+		w = 100,
+		h = 20,
+		text = "test",
+		font = Percentage
 	})
 
 	self.container = newContainer.new({
 		x = 0,
 		y = 100,
 		w = WINDOW_WIDTH,
-		h = 200,
+		h = 300,
 		alignment = {horizontal = true},
 		children = {
 			newContainer.new({
@@ -74,6 +103,14 @@ function Gui:load()
 					self.sliders.slider1,
 					self.sliders.slider2,
 					self.sliders.slider3,
+				}
+			}),
+			newContainer.new({
+				alignment = {vertical = true},
+				children = {
+					self.textBox.textBox1,
+					self.textBox.textBox2,
+					self.textBox.textBox3,
 				}
 			}),
 			newContainer.new({

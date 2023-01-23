@@ -52,13 +52,6 @@ function Slider:containsPointGroove(x, y)
 	return rangeX and rangeY
 end
 
-function Slider:updatePosition()
-	if self.x ~= self.start_x then
-		self.knob_x = self.x - self.start_x + self.knob_x
-		self.start_x = self.x
-	end
-end
-
 function Slider:getValue()
 	local value = self.sliderRangeMin + ((self.knob_x - self.x) / (self.w - self.knob_w))
 		              * (self.sliderRangeMax - self.sliderRangeMin)
@@ -98,6 +91,13 @@ function Slider:maintainBounds()
 	end
 end
 
+function Slider:updatePosition()
+	if self.x ~= self.start_x then
+		self.knob_x = self.x - self.start_x + self.knob_x
+		self.start_x = self.x
+	end
+end
+
 function Slider:update(dt)
 	self:updatePosition()
 	self:maintainBounds()
@@ -121,7 +121,6 @@ end
 function Slider:draw()
 	self:drawGroove()
 	self:drawKnob()
-	-- love.graphics.print(self:getValue())
 end
 
 return Slider

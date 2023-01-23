@@ -26,7 +26,6 @@ function Container.new(settings)
 	instance.childIndex    = {}
 	instance.id            = settings.id or "container"
 	instance.alignment     = settings.alignment
-	-- print("container: "..instance.x)
 
 	return instance
 end
@@ -76,7 +75,7 @@ function Container:setChildPosition()
 		local y = self.y
 		for _, child in ipairs(self.children) do
 			y = y + child.offset_top
-			child:setPosition(self.x, y)
+			child:setPosition(self.x + child.offset_left, y)
 			y = y + child.offset_bottom + child.h
 		end
 	elseif self.alignment.horizontal then

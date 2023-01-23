@@ -1,6 +1,4 @@
 local PositionElements = require("lib.positionElements")
-local s = require("settings")
-local mathx = require("lib.math")
 
 -- LuaFormatter off
 
@@ -12,23 +10,23 @@ setmetatable(TextBox, TextBox_meta)
 setmetatable(TextBox_meta, PositionElements)
 
 ---@class TextBox
----@param settings {x: integer, y: integer, width: integer, height: integer, position: string, id: string, target_id: string, offsetX: integer, offsetY: integer, font: any, valueReference: any, tableReference: any, text: string, displayAsPercentage: boolean}
+---@param settings {x: integer, y: integer, w: integer, h: integer, font: any, valueReference: any, text: string, displayAsPercentage: boolean, offset_top: integer, offset_bottom: integer, offset_left: integer, offset_right: integer}
 function TextBox.new(settings)
 	local instance = setmetatable({}, TextBox)
 	instance.x                   = settings.x or 0
 	instance.y                   = settings.y or 0
-	instance.width               = settings.width or 200
-	instance.height              = settings.height or 80
-	instance.position            = settings.position
-	instance.id                  = settings.id
-	instance.target_id           = settings.target_id
-	instance.offsetX             = settings.offsetX or 0
-	instance.offsetY             = settings.offsetY or 0
-	instance.font                = settings.font
-	instance.valueReference      = settings.valueReference
-	instance.tableReference      = settings.tableReference
-	instance.text                = settings.text
+	instance.w                   = settings.w or 100
+	instance.h                   = settings.h or 50
+	instance.font                = settings.font or love.graphics.getFont()
+	instance.text                = settings.text or settings.valueReference or ""
 	instance.displayAsPercentage = settings.displayAsPercentage or false
+	instance.offset_top          = settings.offset_top or 0
+	instance.offset_bottom       = settings.offset_bottom or 0
+	instance.offset_left         = settings.offset_left or 0
+	instance.offset_right        = settings.offset_right or 0
+	instance.start_x             = settings.x or 0
+	instance.start_y             = settings.y or 0
+
 	return instance
 end
 
@@ -36,22 +34,18 @@ end
 
 function TextBox:drawBackground()
 	love.graphics.setColor(Colors.gray[600])
-	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
 	love.graphics.reset()
 end
 
 function TextBox:drawText()
 	love.graphics.setFont(self.font)
-	local text = self.tableReference[self.valueReference]
-	-- local percentage = math.floor(100 / ( (self.width - self.knob_width) / (self.knob_x - self.groove_x)))
-	-- local percentage = math.floor(text / s.sliderSettings.sliderRangeMax * 100)
-	local width = self.font:getWidth(mathx.to_precision(text, 2))
+	local width = self.font:getWidth(self.text)
 	local height = self.font:getHeight()
-	local x = self.x + self.width / 2 - width / 2
-	local y = self.y + self.height / 2 - height / 2
+	local x = self.x + self.w / 2 - width / 2
+	local y = self.y + self.h / 2 - height / 2
 	love.graphics.setColor(Colors.white)
-	-- love.graphics.print(tostring(percentage), x, y)
-	love.graphics.print(mathx.to_precision(text, 2), x, y)
+	love.graphics.print(self.text, x, y)
 	love.graphics.reset()
 	love.graphics.setFont(Default)
 end
@@ -62,6 +56,14 @@ function TextBox:draw()
 	self:debug()
 end
 
-function TextBox:update() end
+function TextBox:updatePosition()
+	if self.x ~= self.start_x then
+		self.start_x = self.x
+	end
+end
+
+function TextBox:update()
+	self:updatePosition()
+end
 
 return TextBox
