@@ -87,6 +87,9 @@ function Slider:mousepressed(x, y, button, istouch, presses)
 end
 
 function Slider:mousereleased(x, y, button, istouch, presses)
+	if self.active then
+		print(self:getValue())
+	end
 	self.active = false
 end
 
@@ -121,7 +124,7 @@ end
 function Slider:draw()
 	self:drawGroove()
 	self:drawKnob()
-	love.graphics.print(self:getValue())
+	-- love.graphics.print(self:getValue())
 end
 
 return Slider

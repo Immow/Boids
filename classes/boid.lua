@@ -1,4 +1,5 @@
 local Settings = require("settings")
+local Gui = require("gui")
 
 ---@class Boid
 ---@field position any
@@ -29,7 +30,7 @@ function Boid.new(settings)
 end
 
 function Boid:align(boids)
-	local perceptionRadius = Settings.sliderSettings.alignment.perceptionRadius
+	local perceptionRadius = Gui.sliders.slider4:getValue() * 100
 	local steering = Vec2()
 	local total = 0
 
@@ -50,7 +51,7 @@ function Boid:align(boids)
 end
 
 function Boid:cohesion(boids)
-	local perceptionRadius = 20
+	local perceptionRadius = Gui.sliders.slider5:getValue() * 100
 	local steering = Vec2()
 	local total = 0
 
@@ -72,7 +73,7 @@ function Boid:cohesion(boids)
 end
 
 function Boid:separation(boids)
-	local perceptionRadius = 20
+	local perceptionRadius = Gui.sliders.slider6:getValue() * 100
 	local steering = Vec2()
 	local total = 0
 
@@ -103,9 +104,15 @@ function Boid:flock(boids)
 	local cohesion = self:cohesion(boids)
 	local separation = self:separation(boids)
 
-	alignment = alignment * Settings.sliderSettings.alignment["alignmentFactor"]
-	cohesion = cohesion * Settings.sliderSettings.cohesion["cohesionFactor"]
-	separation = separation * Settings.sliderSettings.separation["separationFactor"]
+	-- print(Gui.container.children[1].children[1]:getValue())
+	-- print(Gui.sliders.slider1:getValue())
+	-- pass in the id of a slider aka slider1
+	-- we store the child in some table and the id will the named key --> where child located
+	-- child id = slider1..  childLocation = {slider1 = }
+
+	alignment = alignment * Gui.sliders.slider1:getValue()
+	cohesion = cohesion * Gui.sliders.slider2:getValue()
+	separation = separation * Gui.sliders.slider3:getValue()
 
 	self.acceleration:add(alignment)
 	self.acceleration:add(cohesion)

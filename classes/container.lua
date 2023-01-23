@@ -10,6 +10,8 @@ Container_meta.__index = Container_meta
 setmetatable(Container, Container_meta)
 setmetatable(Container_meta, PositionElements)
 
+local count = 0
+
 ---@class Container
 ---@param settings {x: integer, y: integer, w: integer, h: integer, children: table, offset_top: integer, offset_bottom: integer, offset_left: integer, offset_right: integer}
 function Container.new(settings)
@@ -25,6 +27,8 @@ function Container.new(settings)
 	instance.children      = settings.children or {}
 	instance.childIndex    = {}
 	instance.id            = "container"
+	count = count + 1
+	print(count)
 
 	return instance
 end

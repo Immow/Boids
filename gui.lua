@@ -6,39 +6,68 @@ local settings = require("settings")
 local newButton = require("classes.button")
 require("lib.positionElements")
 
-local Gui = {}
-local container
+local Gui = {container = {}, sliders = {}}
 
 function Gui:load()
-	-- container = newContainer.new({
-	-- 	x = 0,
-	-- 	y = 200,
-	-- 	width = WINDOW_WIDTH,
-	-- 	height = 80,
-	-- })
+	self.sliders.slider1 = newSlider.new({
+		offset_top = 5,
+		offset_bottom = 5,
+		w = 150,
+		h = 20,
+		sliderRangeMax = 4,
+		sliderRangeMin = 0,
+		startValue = 0.5
+	})
 
-	-- local slider1 = newSlider.new({
-	-- 	offset_top = 5,
-	-- 	offset_bottom = 5,
-	-- 	w = 150,
-	-- 	h = 20,
-	-- 	sliderRangeMax = 4,
-	-- 	sliderRangeMin = 0,
-	-- 	startValue = 50
-	-- })
+	self.sliders.slider2 = newSlider.new({
+		offset_bottom = 5,
+		h = 20,
+		w = 150,
+		sliderRangeMax = 4,
+		sliderRangeMin = 0,
+		startValue = 0.5
+	})
 
-	-- local slider2 = newSlider.new({
-	-- 	offset_bottom = 5,
-	-- 	h = 20,
-	-- 	w = 150,
-	-- 	sliderRangeMax = 4,
-	-- 	sliderRangeMin = 0,
-	-- 	startValue = 50
-	-- })
+	self.sliders.slider3 = newSlider.new({
+		offset_top = 5,
+		offset_bottom = 5,
+		w = 150,
+		h = 20,
+		sliderRangeMax = 4,
+		sliderRangeMin = 0,
+		startValue = 0.5
+	})
 
-	container = newContainer.new({
+	self.sliders.slider4 = newSlider.new({
+		offset_bottom = 5,
+		h = 20,
+		w = 150,
+		sliderRangeMax = 1,
+		sliderRangeMin = 0,
+		startValue = 0.5
+	})
+
+	self.sliders.slider5 = newSlider.new({
+		offset_bottom = 5,
+		h = 20,
+		w = 150,
+		sliderRangeMax = 1,
+		sliderRangeMin = 0,
+		startValue = 0.5
+	})
+
+	self.sliders.slider6 = newSlider.new({
+		offset_bottom = 5,
+		h = 20,
+		w = 150,
+		sliderRangeMax = 1,
+		sliderRangeMin = 0,
+		startValue = 0.5
+	})
+
+	self.container = newContainer.new({
 		x = 0,
-		y = 0,
+		y = 100,
 		w = WINDOW_WIDTH,
 		h = 200,
 		children = {
@@ -46,28 +75,19 @@ function Gui:load()
 				w = 150,
 				h = 100,
 				children = {
-					newSlider.new({
-						offset_top = 5,
-						offset_bottom = 5,
-						w = 150,
-						h = 20,
-						sliderRangeMax = 4,
-						sliderRangeMin = 0,
-						startValue = 50
-					}),
-					newSlider.new({
-						offset_bottom = 5,
-						h = 20,
-						w = 150,
-						sliderRangeMax = 4,
-						sliderRangeMin = 0,
-						startValue = 50
-					})
+					self.sliders.slider1,
+					self.sliders.slider2,
+					self.sliders.slider3,
 				}
 			}),
 			newContainer.new({
 				w = 150,
-				h = 100
+				h = 100,
+				children = {
+					self.sliders.slider4,
+					self.sliders.slider5,
+					self.sliders.slider6,
+				}
 			})
 		}
 	})
@@ -198,24 +218,24 @@ function Gui:load()
 	-- })
 
 	-- local test = function () return Flux.to(container, 4, { x = 0, y = 100 }) end
-	local test = function ()
-		if container.y == WINDOW_HEIGHT then
-			Flux.to(container, 2, { x = 0, y = WINDOW_HEIGHT - 80}):ease("quadout")
-		else
-			Flux.to(container, 2, { x = 0, y = WINDOW_HEIGHT}):ease("quadout")
-		end
-	end
+	-- local test = function ()
+	-- 	if container.y == WINDOW_HEIGHT then
+	-- 		Flux.to(container, 2, { x = 0, y = WINDOW_HEIGHT - 80}):ease("quadout")
+	-- 	else
+	-- 		Flux.to(container, 2, { x = 0, y = WINDOW_HEIGHT}):ease("quadout")
+	-- 	end
+	-- end
 
-	local b = newButton.new({
-		position = "TL-P",
-		id = "b",
-		target_id = "parent",
-		offsetY = -20,
-		text = "GUI",
-		func = test,
-		width = 50,
-		height = 20
-	})
+	-- local b = newButton.new({
+	-- 	position = "TL-P",
+	-- 	id = "b",
+	-- 	target_id = "parent",
+	-- 	offsetY = -20,
+	-- 	text = "GUI",
+	-- 	func = test,
+	-- 	width = 50,
+	-- 	height = 20
+	-- })
 
 	-- container:addChilds(slider1, slider2)
 end
@@ -224,27 +244,27 @@ function Gui:keypressed(key,scancode,isrepeat)
 end
 
 function Gui:mousepressed(x,y,button,istouch,presses)
-	container:mousepressed(x,y,button,istouch,presses)
+	self.container:mousepressed(x,y,button,istouch,presses)
 end
 
 function Gui:mousereleased(x,y,button,istouch,presses)
-	container:mousereleased(x,y,button,istouch,presses)
+	self.container:mousereleased(x,y,button,istouch,presses)
 end
 
 function Gui:mousemoved(x, y, dx, dy, istouch)
-	container:mousemoved(x, y, dx, dy, istouch)
+	self.container:mousemoved(x, y, dx, dy, istouch)
 end
 
 function Gui:draw()
-	container:draw()
+	self.container:draw()
 end
 
 function Gui:update(dt)
-	container:update(dt)
+	self.container:update(dt)
 end
 
 function Gui:resize()
-	container:resize()
+	self.container:resize()
 end
 
 return Gui

@@ -44,17 +44,17 @@ end
 
 function Game:drawAlignmentPerceptionRadius(boid)
 	love.graphics.setColor(0,1,0)
-	love.graphics.circle("line", boid.position.x, boid.position.y, Settings.sliderSettings.alignment.perceptionRadius)
+	love.graphics.circle("line", boid.position.x, boid.position.y, Gui.sliders.slider4:getValue() * 100)
 end
 
 function Game:drawCohesionPerceptionRadius(boid)
 	love.graphics.setColor(0,0,1)
-	love.graphics.circle("line", boid.position.x, boid.position.y, Settings.sliderSettings.cohesion.perceptionRadius)
+	love.graphics.circle("line", boid.position.x, boid.position.y, Gui.sliders.slider5:getValue() * 100)
 end
 
 function Game:drawSeparationPerceptionRadius(boid)
 	love.graphics.setColor(1,1,0)
-	love.graphics.circle("line", boid.position.x, boid.position.y, Settings.sliderSettings.separation.perceptionRadius)
+	love.graphics.circle("line", boid.position.x, boid.position.y, Gui.sliders.slider6:getValue() * 100)
 end
 
 function Game:draw()
