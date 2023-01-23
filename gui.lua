@@ -67,8 +67,9 @@ function Gui:load()
 		offset_right = 5,
 		w = 100,
 		h = 20,
-		text = "test",
-		font = Percentage
+		text = function () return self.sliders.slider1:getValue() end,
+		font = Percentage,
+		decimal_points = 2
 	})
 
 	self.textBox.textBox2 = newTextBox.new({
@@ -77,8 +78,9 @@ function Gui:load()
 		offset_right = 5,
 		w = 100,
 		h = 20,
-		text = "test",
-		font = Percentage
+		text = function () return self.sliders.slider2:getValue() end,
+		font = Percentage,
+		decimal_points = 2
 	})
 
 	self.textBox.textBox3 = newTextBox.new({
@@ -86,8 +88,41 @@ function Gui:load()
 		-- offset_right = 5,
 		w = 100,
 		h = 20,
-		text = "test",
-		font = Percentage
+		text = function () return self.sliders.slider3:getValue() end,
+		font = Percentage,
+		decimal_points = 2
+	})
+
+	self.textBox.textBox4 = newTextBox.new({
+		offset_left = 5,
+		offset_bottom = 5,
+		-- offset_right = 5,
+		w = 100,
+		h = 20,
+		text = function () return self.sliders.slider4:getValue() * 100 end,
+		font = Percentage,
+		decimal_points = 0
+	})
+
+	self.textBox.textBox5 = newTextBox.new({
+		offset_left = 5,
+		offset_bottom = 5,
+		-- offset_right = 5,
+		w = 100,
+		h = 20,
+		text = function () return self.sliders.slider5:getValue() * 100 end,
+		font = Percentage,
+		decimal_points = 0
+	})
+
+	self.textBox.textBox6 = newTextBox.new({
+		offset_left = 5,
+		-- offset_right = 5,
+		w = 100,
+		h = 20,
+		text = function () return self.sliders.slider6:getValue() * 100 end,
+		font = Percentage,
+		decimal_points = 0
 	})
 
 	self.container = newContainer.new({
@@ -120,6 +155,14 @@ function Gui:load()
 					self.sliders.slider4,
 					self.sliders.slider5,
 					self.sliders.slider6,
+				}
+			}),
+			newContainer.new({
+				alignment = {vertical = true},
+				children = {
+					self.textBox.textBox4,
+					self.textBox.textBox5,
+					self.textBox.textBox6,
 				}
 			})
 		}

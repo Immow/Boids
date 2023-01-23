@@ -2,7 +2,7 @@ local Game = {boids = {}}
 local Boid = require("classes.boid")
 local Gui = require("gui")
 local Settings = require("settings")
-local mathx = require("lib.math")
+local mathx = require("lib.mathx")
 
 function Game:spawnBoid(n)
 	for i = 1, n do

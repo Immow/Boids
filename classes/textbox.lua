@@ -1,4 +1,5 @@
 local PositionElements = require("lib.positionElements")
+local mathx = require("lib.mathx")
 
 -- LuaFormatter off
 
@@ -10,7 +11,7 @@ setmetatable(TextBox, TextBox_meta)
 setmetatable(TextBox_meta, PositionElements)
 
 ---@class TextBox
----@param settings {x: integer, y: integer, w: integer, h: integer, font: any, valueReference: any, text: string, displayAsPercentage: boolean, offset_top: integer, offset_bottom: integer, offset_left: integer, offset_right: integer}
+---@param settings {x: integer, y: integer, w: integer, h: integer, font: any, valueReference: any, text: any, displayAsPercentage: boolean, offset_top: integer, offset_bottom: integer, offset_left: integer, offset_right: integer, decimal_points: integer}
 function TextBox.new(settings)
 	local instance = setmetatable({}, TextBox)
 	instance.x                   = settings.x or 0
@@ -18,7 +19,7 @@ function TextBox.new(settings)
 	instance.w                   = settings.w or 100
 	instance.h                   = settings.h or 50
 	instance.font                = settings.font or love.graphics.getFont()
-	instance.text                = settings.text or settings.valueReference or ""
+	instance.text                = settings.text or ""
 	instance.displayAsPercentage = settings.displayAsPercentage or false
 	instance.offset_top          = settings.offset_top or 0
 	instance.offset_bottom       = settings.offset_bottom or 0
@@ -26,6 +27,7 @@ function TextBox.new(settings)
 	instance.offset_right        = settings.offset_right or 0
 	instance.start_x             = settings.x or 0
 	instance.start_y             = settings.y or 0
+	instance.decimal_points      = settings.decimal_points or 1
 
 	return instance
 end
@@ -39,13 +41,22 @@ function TextBox:drawBackground()
 end
 
 function TextBox:drawText()
+	local text = self.text
+	if type(self.text) == "function" then
+		text = self.text()
+	end
+
+	if type(text) == "number" then
+		text = mathx.to_precision(text, self.decimal_points)
+	end
+
 	love.graphics.setFont(self.font)
-	local width = self.font:getWidth(self.text)
+	local width = self.font:getWidth(text)
 	local height = self.font:getHeight()
 	local x = self.x + self.w / 2 - width / 2
 	local y = self.y + self.h / 2 - height / 2
 	love.graphics.setColor(Colors.white)
-	love.graphics.print(self.text, x, y)
+	love.graphics.print(text, x, y)
 	love.graphics.reset()
 	love.graphics.setFont(Default)
 end
