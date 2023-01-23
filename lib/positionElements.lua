@@ -18,6 +18,7 @@ function PositionElements:debug()
 	if DEBUG then
 		love.graphics.setColor(1,0,0)
 		love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
+		love.graphics.print("x: "..self.x..", y:"..self.y, self.x, self.y)
 		love.graphics.setColor(1,1,1)
 	end
 end

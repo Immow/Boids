@@ -51,10 +51,10 @@ function TextBox:drawText()
 	end
 
 	love.graphics.setFont(self.font)
-	local width = self.font:getWidth(text)
-	local height = self.font:getHeight()
-	local x = self.x + self.w / 2 - width / 2
-	local y = self.y + self.h / 2 - height / 2
+	local w = self.font:getWidth(text)
+	local h = self.font:getHeight()
+	local x = self.x + self.w / 2 - w / 2
+	local y = self.y + self.h / 2 - h / 2
 	love.graphics.setColor(Colors.white)
 	love.graphics.print(text, x, y)
 	love.graphics.reset()

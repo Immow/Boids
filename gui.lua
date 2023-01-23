@@ -10,8 +10,8 @@ local Gui = {container = {}, sliders = {}, textBox = {}}
 
 function Gui:load()
 	self.sliders.slider1 = newSlider.new({
-		offset_bottom = 5,
-		w = 150,
+		-- offset_bottom = 5,
+		w = 100,
 		h = 20,
 		sliderRangeMax = 4,
 		sliderRangeMin = 0,
@@ -19,8 +19,8 @@ function Gui:load()
 	})
 
 	self.sliders.slider2 = newSlider.new({
-		offset_bottom = 5,
-		w = 150,
+		-- offset_bottom = 5,
+		w = 100,
 		h = 20,
 		sliderRangeMax = 4,
 		sliderRangeMin = 0,
@@ -28,7 +28,7 @@ function Gui:load()
 	})
 
 	self.sliders.slider3 = newSlider.new({
-		w = 150,
+		w = 100,
 		h = 20,
 		sliderRangeMax = 4,
 		sliderRangeMin = 0,
@@ -36,8 +36,8 @@ function Gui:load()
 	})
 
 	self.sliders.slider4 = newSlider.new({
-		offset_bottom = 5,
-		w = 150,
+		-- offset_bottom = 5,
+		w = 100,
 		h = 20,
 		sliderRangeMax = 1,
 		sliderRangeMin = 0,
@@ -45,8 +45,8 @@ function Gui:load()
 	})
 
 	self.sliders.slider5 = newSlider.new({
-		offset_bottom = 5,
-		w = 150,
+		-- offset_bottom = 5,
+		w = 100,
 		h = 20,
 		sliderRangeMax = 1,
 		sliderRangeMin = 0,
@@ -54,7 +54,7 @@ function Gui:load()
 	})
 
 	self.sliders.slider6 = newSlider.new({
-		w = 150,
+		w = 100,
 		h = 20,
 		sliderRangeMax = 1,
 		sliderRangeMin = 0,
@@ -62,9 +62,9 @@ function Gui:load()
 	})
 
 	self.textBox.textBox1 = newTextBox.new({
-		offset_bottom = 5,
-		offset_left = 5,
-		offset_right = 5,
+		-- offset_bottom = 5,
+		-- offset_left = 5,
+		-- offset_right = 5,
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider1:getValue() end,
@@ -73,9 +73,9 @@ function Gui:load()
 	})
 
 	self.textBox.textBox2 = newTextBox.new({
-		offset_bottom = 5,
-		offset_left = 5,
-		offset_right = 5,
+		-- offset_bottom = 5,
+		-- offset_left = 5,
+		-- offset_right = 5,
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider2:getValue() end,
@@ -84,7 +84,7 @@ function Gui:load()
 	})
 
 	self.textBox.textBox3 = newTextBox.new({
-		offset_left = 5,
+		-- offset_left = 5,
 		-- offset_right = 5,
 		w = 100,
 		h = 20,
@@ -94,8 +94,8 @@ function Gui:load()
 	})
 
 	self.textBox.textBox4 = newTextBox.new({
-		offset_left = 5,
-		offset_bottom = 5,
+		-- offset_left = 5,
+		-- offset_bottom = 5,
 		-- offset_right = 5,
 		w = 100,
 		h = 20,
@@ -105,8 +105,8 @@ function Gui:load()
 	})
 
 	self.textBox.textBox5 = newTextBox.new({
-		offset_left = 5,
-		offset_bottom = 5,
+		-- offset_left = 5,
+		-- offset_bottom = 5,
 		-- offset_right = 5,
 		w = 100,
 		h = 20,
@@ -116,7 +116,7 @@ function Gui:load()
 	})
 
 	self.textBox.textBox6 = newTextBox.new({
-		offset_left = 5,
+		-- offset_left = 5,
 		-- offset_right = 5,
 		w = 100,
 		h = 20,
@@ -131,6 +131,7 @@ function Gui:load()
 		w = WINDOW_WIDTH,
 		h = 300,
 		alignment = {horizontal = true},
+		spacing = {evenly = true},
 		children = {
 			newContainer.new({
 				alignment = {vertical = true},
@@ -150,7 +151,6 @@ function Gui:load()
 			}),
 			newContainer.new({
 				alignment = {vertical = true},
-				id = "container3",
 				children = {
 					self.sliders.slider4,
 					self.sliders.slider5,
