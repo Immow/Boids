@@ -23,10 +23,6 @@ function Container.new(settings)
 	instance.w             = settings.w or Container:getChildrenTotalWidth(settings)
 	instance.h             = settings.h or Container:getChildrenTotalHeight(settings)
 	instance.offset        = Container.getOffset(settings)
-	-- instance.offset.top    = settings.offset.top or 0
-	-- instance.offset.bottom = settings.offset.bottom or 0
-	-- instance.offset.left   = settings.offset.left or 0
-	-- instance.offset.right  = settings.offset.right or 0
 	instance.children      = settings.children or {}
 	instance.childIndex    = {}
 	instance.id            = settings.id or "container"

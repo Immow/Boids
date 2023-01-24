@@ -21,10 +21,6 @@ function TextBox.new(settings)
 	instance.font                = settings.font or love.graphics.getFont()
 	instance.text                = settings.text or ""
 	instance.displayAsPercentage = settings.displayAsPercentage or false
-	-- instance.offset_top          = settings.offset_top or 0
-	-- instance.offset_bottom       = settings.offset_bottom or 0
-	-- instance.offset_left         = settings.offset_left or 0
-	-- instance.offset_right        = settings.offset_right or 0
 	instance.offset              = TextBox.getOffset(settings)
 	instance.start_x             = settings.x or 0
 	instance.start_y             = settings.y or 0
