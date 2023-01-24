@@ -128,12 +128,12 @@ function Gui:load()
 	self.container = newContainer.new({
 		x = 0,
 		y = 100,
-		w = WINDOW_WIDTH,
+		-- w = WINDOW_WIDTH,
 		-- h = 300,
 		-- offset = {left = 50, right = 50},
 		-- offset = {top = 20, bottom = 20},
 		alignment = {horizontal = true},
-		spacing = {evenly = true},
+		spacing = {between = 10},
 		children = {
 			newContainer.new({
 				alignment = {vertical = true},
@@ -148,6 +148,7 @@ function Gui:load()
 			}),
 			newContainer.new({
 				alignment = {vertical = true},
+				spacing = {between = 10},
 				children = {
 					self.textBox.textBox1,
 					self.textBox.textBox2,
@@ -156,6 +157,7 @@ function Gui:load()
 			}),
 			newContainer.new({
 				alignment = {vertical = true},
+				spacing = {between = 10},
 				children = {
 					self.sliders.slider4,
 					self.sliders.slider5,
@@ -164,6 +166,7 @@ function Gui:load()
 			}),
 			newContainer.new({
 				alignment = {vertical = true},
+				spacing = {between = 10},
 				children = {
 					self.textBox.textBox4,
 					self.textBox.textBox5,

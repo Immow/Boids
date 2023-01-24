@@ -28,7 +28,6 @@ function Container.new(settings)
 	instance.id            = settings.id or "container"
 	instance.alignment     = settings.alignment
 	instance.spacing       = settings.spacing or {}
-print(instance.h)
 	return instance
 end
 
@@ -111,7 +110,7 @@ function Container:setChildPosition()
 			elseif self.spacing.between then
 				local spacing  = (self.w - self:getChildrenTotalWidth(self)) / (#self.children - 1) + self.spacing.between
 				child:setPosition(x, self.y + self.offset.top)
-				x = x + spacing + child.w
+				x = x + child.w + spacing
 			else
 				x = x + child.offset.left
 				child:setPosition(x, self.y + self.offset.top)
@@ -151,7 +150,6 @@ function Container:mousemoved(x, y, dx, dy, istouch)
 		end
 	end
 end
-
 
 function Container:update(dt)
 	self:positionChildren(dt)
