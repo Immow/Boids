@@ -129,15 +129,17 @@ function Gui:load()
 		x = 0,
 		y = 100,
 		w = WINDOW_WIDTH,
-		h = 300,
+		-- h = 300,
 		-- offset = {left = 50, right = 50},
+		-- offset = {top = 20, bottom = 20},
 		alignment = {horizontal = true},
-		spacing = {between = true},
+		spacing = {evenly = true},
 		children = {
 			newContainer.new({
 				alignment = {vertical = true},
-				spacing = {between = true},
-				offset = {top = 5, bottom = 5},
+				spacing = {between = 10},
+				-- offset = {top = 20, bottom = 20},
+				-- h = 300,
 				children = {
 					self.sliders.slider1,
 					self.sliders.slider2,

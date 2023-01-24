@@ -11,7 +11,7 @@ setmetatable(Container, Container_meta)
 setmetatable(Container_meta, PositionElements)
 
 ---@class Container
----@param settings {x: integer, y: integer, w: integer, h: integer, children: table, offset: {top: integer, bottom: integer, left: integer, right: integer}, alignment: {horizontal: boolean, vertical: boolean}, id: string, spacing: {evenly: boolean, between: boolean}}
+---@param settings {x: integer, y: integer, w: integer, h: integer, children: table, offset: {top: integer, bottom: integer, left: integer, right: integer}, alignment: {horizontal: boolean, vertical: boolean}, id: string, spacing: {evenly: boolean, between: boolean|integer}}
 function Container.new(settings)
 	local instance = setmetatable({}, Container)
 	if not settings.alignment or (not settings.alignment.vertical and not settings.alignment.horizontal) then
@@ -28,7 +28,7 @@ function Container.new(settings)
 	instance.id            = settings.id or "container"
 	instance.alignment     = settings.alignment
 	instance.spacing       = settings.spacing or {}
-
+print(instance.h)
 	return instance
 end
 
@@ -41,16 +41,18 @@ function Container:getChildrenTotalHeight(settings)
 		return 100
 	end
 	local h = 0
-	for _, child in ipairs(settings.children) do
+	for i, child in ipairs(settings.children) do
 		if settings.alignment.horizontal then
-			if child.offset.top + child.offset.bottom + child.h > h then
-				h = child.offset.top + child.offset.bottom + child.h
+			if child.h > h then
+				h = child.h
 			end
 		else
-			h = h + child.offset.top + child.offset.bottom + child.h
+			h = h + child.h
+			if i ~= 1 and settings.spacing  and settings.spacing.between then
+				h = h + settings.spacing.between
+			end
 		end
 	end
-
 	return h + offset.top + offset.bottom
 end
 
@@ -82,11 +84,11 @@ function Container:setChildPosition()
 			if self.spacing.evenly then
 				local spacing = (self.h - self:getChildrenTotalHeight(self)) / (#self.children + 1)
 				y = y + spacing
-				child:setPosition(self.x, y)
+				child:setPosition(self.x + self.offset.left, y)
 				y = y + child.h
 			elseif self.spacing.between then
-				local spacing = (self.h - self:getChildrenTotalHeight(self)) / (#self.children - 1)
-				child:setPosition(self.x, y)
+				local spacing = (self.h - self:getChildrenTotalHeight(self)) / (#self.children - 1) + self.spacing.between
+				child:setPosition(self.x  + self.offset.left, y)
 				y = y + child.h + spacing
 			else
 				y = y + child.offset.top
@@ -97,20 +99,19 @@ function Container:setChildPosition()
 	elseif self.alignment.horizontal then
 		local x = self.x
 		for i, child in ipairs(self.children) do
-			if child.x == nil then error("x: "..i) end
 			if i == 1 then x = x + self.offset.left end
 			if self.spacing.evenly then
 				local spacing  = (self.w - self:getChildrenTotalWidth(self)) / (#self.children + 1)
 				x = x + spacing
-				child:setPosition(x, self.y)
+				child:setPosition(x, self.y + self.offset.top)
 				x = x + child.w
 			elseif self.spacing.between then
-				local spacing  = (self.w - self:getChildrenTotalWidth(self)) / (#self.children - 1)
-				child:setPosition(x, self.y)
+				local spacing  = (self.w - self:getChildrenTotalWidth(self)) / (#self.children - 1) + self.spacing.between
+				child:setPosition(x, self.y + self.offset.top)
 				x = x + spacing + child.w
 			else
 				x = x + child.offset.left
-				child:setPosition(x, self.y)
+				child:setPosition(x, self.y + self.offset.top)
 				x = x + child.offset.right + child.w
 			end
 		end
