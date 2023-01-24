@@ -63,13 +63,16 @@ function Container:getChildrenTotalWidth(settings)
 		return 100
 	end
 	local w = 0
-	for _, child in ipairs(settings.children) do
+	for i, child in ipairs(settings.children) do
 		if settings.alignment.vertical then
-			if child.offset.left + child.offset.right + child.w > w then
-				w = child.offset.left + child.offset.right + child.w
+			if child.w > w then
+				w = child.w
 			end
 		else
-			w = w + child.offset.left + child.offset.right + child.w
+			w = w + child.w
+			if i ~= 1 and settings.spacing  and settings.spacing.between then
+				w = w + settings.spacing.between
+			end
 		end
 	end
 
