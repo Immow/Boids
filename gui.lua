@@ -10,7 +10,7 @@ local Gui = {container = {}, sliders = {}, textBox = {}}
 
 function Gui:load()
 	self.sliders.slider1 = newSlider.new({
-		-- offset_bottom = 5,
+		offset = {bottom = 5},
 		w = 100,
 		h = 20,
 		sliderRangeMax = 4,
@@ -19,7 +19,7 @@ function Gui:load()
 	})
 
 	self.sliders.slider2 = newSlider.new({
-		-- offset_bottom = 5,
+		offset = {bottom = 5},
 		w = 100,
 		h = 20,
 		sliderRangeMax = 4,
@@ -135,6 +135,8 @@ function Gui:load()
 		children = {
 			newContainer.new({
 				alignment = {vertical = true},
+				-- w = 100,
+				-- h = 200,
 				children = {
 					self.sliders.slider1,
 					self.sliders.slider2,

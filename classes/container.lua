@@ -11,7 +11,7 @@ setmetatable(Container, Container_meta)
 setmetatable(Container_meta, PositionElements)
 
 ---@class Container
----@param settings {x: integer, y: integer, w: integer, h: integer, children: table, offset_top: integer, offset_bottom: integer, offset_left: integer, offset_right: integer, alignment: {horizontal: boolean, vertical: boolean}, id: string, spacing: {evenly: boolean, spaceBetween: boolean}}
+---@param settings {x: integer, y: integer, w: integer, h: integer, children: table, offset: {top: integer, bottom: integer, left: integer, right: integer}, alignment: {horizontal: boolean, vertical: boolean}, id: string, spacing: {evenly: boolean, spaceBetween: boolean}}
 function Container.new(settings)
 	local instance = setmetatable({}, Container)
 	if not settings.alignment or (not settings.alignment.vertical and not settings.alignment.horizontal) then
@@ -22,10 +22,11 @@ function Container.new(settings)
 	instance.y             = settings.y or 0
 	instance.w             = settings.w or Container:getChildrenTotalWidth(settings)
 	instance.h             = settings.h or Container:getChildrenTotalHeight(settings)
-	instance.offset_top    = settings.offset_top or 0
-	instance.offset_bottom = settings.offset_bottom or 0
-	instance.offset_left   = settings.offset_left or 0
-	instance.offset_right  = settings.offset_right or 0
+	instance.offset        = Container.getOffset(settings)
+	-- instance.offset.top    = settings.offset.top or 0
+	-- instance.offset.bottom = settings.offset.bottom or 0
+	-- instance.offset.left   = settings.offset.left or 0
+	-- instance.offset.right  = settings.offset.right or 0
 	instance.children      = settings.children or {}
 	instance.childIndex    = {}
 	instance.id            = settings.id or "container"
@@ -45,11 +46,11 @@ function Container:getChildrenTotalHeight(settings)
 	local h = 0
 	for _, child in ipairs(settings.children) do
 		if settings.alignment.horizontal then
-			if child.offset_top + child.offset_bottom + child.h > h then
-				h = child.offset_top + child.offset_bottom + child.h
+			if child.offset.top + child.offset.bottom + child.h > h then
+				h = child.offset.top + child.offset.bottom + child.h
 			end
 		else
-			h = h + child.offset_top + child.offset_bottom + child.h
+			h = h + child.offset.top + child.offset.bottom + child.h
 		end
 	end
 
@@ -64,11 +65,11 @@ function Container:getChildrenTotalWidth(settings)
 	local w = 0
 	for _, child in ipairs(settings.children) do
 		if settings.alignment.vertical then
-			if child.offset_left + child.offset_right + child.w > w then
-				w = child.offset_left + child.offset_right + child.w
+			if child.offset.left + child.offset.right + child.w > w then
+				w = child.offset.left + child.offset.right + child.w
 			end
 		else
-			w  = w + child.offset_left + child.offset_right + child.w
+			w  = w + child.offset.left + child.offset.right + child.w
 		end
 	end
 
@@ -85,9 +86,9 @@ function Container:setChildPosition()
 				child:setPosition(self.x + y)
 				y = y + child.h
 			else
-				y = y + child.offset_top
-				child:setPosition(self.x + child.offset_left, y)
-				y = y + child.offset_bottom + child.h
+				y = y + child.offset.top
+				child:setPosition(self.x + child.offset.left, y)
+				y = y + child.offset.bottom + child.h
 			end
 		end
 	elseif self.alignment.horizontal then
@@ -99,9 +100,9 @@ function Container:setChildPosition()
 				child:setPosition(x, self.y)
 				x = x + child.w
 			else
-				x = x + child.offset_left
+				x = x + child.offset.left
 				child:setPosition(x, self.y)
-				x = x + child.offset_right + child.w
+				x = x + child.offset.right + child.w
 			end
 		end
 	end

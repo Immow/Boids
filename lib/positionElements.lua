@@ -14,6 +14,18 @@ function PositionElements:getPosition()
 	return self.x, self.y
 end
 
+function PositionElements.getOffset(settings)
+	if not settings.offset then
+		return {top = 0, bottom = 0, left = 0, right = 0}
+	else
+		local top = settings.offset.top or 0
+		local bottom = settings.offset.bottom or 0
+		local left = settings.offset.left or 0
+		local right = settings.offset.right or 0
+		return {top = top, bottom = bottom, left = left, right = right}
+	end
+end
+
 function PositionElements:debug()
 	if DEBUG then
 		love.graphics.setColor(1,0,0)

@@ -12,7 +12,7 @@ setmetatable(Slider, Slider_meta)
 setmetatable(Slider_meta, PositionElements)
 
 ---@class Slider
----@param settings {x: integer, y: integer, w: integer, h: integer, groove_h: integer, knob_w: integer, knob_h: integer, sliderRangeMax: integer, sliderRangeMin: integer, startValue: integer, offset_top: integer, offset_bottom: integer, offset_left: integer, offset_right: integer}
+---@param settings {x: integer, y: integer, w: integer, h: integer, groove_h: integer, knob_w: integer, knob_h: integer, sliderRangeMax: integer, sliderRangeMin: integer, startValue: integer, offset: {top: integer, bottom: integer, left: integer, right: integer}}
 function Slider.new(settings)
 	local instance = setmetatable({}, Slider)
 	instance.startValue     = settings.startValue or 0
@@ -28,11 +28,13 @@ function Slider.new(settings)
 	instance.start_y        = settings.y or 0
 	instance.sliderRangeMax = settings.sliderRangeMax or 1
 	instance.sliderRangeMin = settings.sliderRangeMin or 0
-	instance.offset_top     = settings.offset_top or 0
-	instance.offset_bottom  = settings.offset_bottom or 0
-	instance.offset_left    = settings.offset_left or 0
-	instance.offset_right   = settings.offset_right or 0
+	instance.offset         = Slider.getOffset(settings)
+	-- instance.offset_top     = settings.offset_top or 0
+	-- instance.offset_bottom  = settings.offset_bottom or 0
+	-- instance.offset_left    = settings.offset_left or 0
+	-- instance.offset_right   = settings.offset_right or 0
 	instance.active         = false
+	print(instance.offset.bottom)
 	return instance
 end
 
