@@ -10,7 +10,7 @@ local Gui = {container = {}, sliders = {}, textBox = {}}
 
 function Gui:load()
 	self.sliders.slider1 = newSlider.new({
-		offset = {bottom = 5},
+		-- offset = {bottom = 5},
 		w = 100,
 		h = 20,
 		sliderRangeMax = 4,
@@ -19,7 +19,7 @@ function Gui:load()
 	})
 
 	self.sliders.slider2 = newSlider.new({
-		offset = {bottom = 5},
+		-- offset = {bottom = 5},
 		w = 100,
 		h = 20,
 		sliderRangeMax = 4,
@@ -36,7 +36,7 @@ function Gui:load()
 	})
 
 	self.sliders.slider4 = newSlider.new({
-		-- offset_bottom = 5,
+		-- offset = {bottom = 5},
 		w = 100,
 		h = 20,
 		sliderRangeMax = 1,
@@ -45,7 +45,7 @@ function Gui:load()
 	})
 
 	self.sliders.slider5 = newSlider.new({
-		-- offset_bottom = 5,
+		-- offset = {bottom = 5},
 		w = 100,
 		h = 20,
 		sliderRangeMax = 1,
@@ -62,9 +62,9 @@ function Gui:load()
 	})
 
 	self.textBox.textBox1 = newTextBox.new({
-		-- offset_bottom = 5,
-		-- offset_left = 5,
-		-- offset_right = 5,
+		-- offset = {bottom = 5},
+		-- offset = {left = 5},
+		-- offset = {right = 5},
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider1:getValue() end,
@@ -73,9 +73,9 @@ function Gui:load()
 	})
 
 	self.textBox.textBox2 = newTextBox.new({
-		-- offset_bottom = 5,
-		-- offset_left = 5,
-		-- offset_right = 5,
+		-- offset = {bottom = 5},
+		-- offset = {left = 5},
+		-- offset = {right = 5},
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider2:getValue() end,
@@ -84,8 +84,8 @@ function Gui:load()
 	})
 
 	self.textBox.textBox3 = newTextBox.new({
-		-- offset_left = 5,
-		-- offset_right = 5,
+		-- offset = {left = 5},
+		-- offset = {right = 5},
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider3:getValue() end,
@@ -94,9 +94,9 @@ function Gui:load()
 	})
 
 	self.textBox.textBox4 = newTextBox.new({
-		-- offset_left = 5,
-		-- offset_bottom = 5,
-		-- offset_right = 5,
+		-- offset = {left = 5},
+		-- offset = {bottom = 5},
+		-- offset = {right = 5},
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider4:getValue() * 100 end,
@@ -105,9 +105,9 @@ function Gui:load()
 	})
 
 	self.textBox.textBox5 = newTextBox.new({
-		-- offset_left = 5,
-		-- offset_bottom = 5,
-		-- offset_right = 5,
+		-- offset = {left = 5},
+		-- offset = {bottom = 5},
+		-- offset = {right = 5},
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider5:getValue() * 100 end,
@@ -116,8 +116,8 @@ function Gui:load()
 	})
 
 	self.textBox.textBox6 = newTextBox.new({
-		-- offset_left = 5,
-		-- offset_right = 5,
+		-- offset = {left = 5},
+		-- offset = {right = 5},
 		w = 100,
 		h = 20,
 		text = function () return self.sliders.slider6:getValue() * 100 end,
@@ -130,13 +130,14 @@ function Gui:load()
 		y = 100,
 		w = WINDOW_WIDTH,
 		h = 300,
+		-- offset = {left = 50, right = 50},
 		alignment = {horizontal = true},
-		spacing = {evenly = true},
+		spacing = {between = true},
 		children = {
 			newContainer.new({
 				alignment = {vertical = true},
-				-- w = 100,
-				-- h = 200,
+				spacing = {between = true},
+				offset = {top = 5, bottom = 5},
 				children = {
 					self.sliders.slider1,
 					self.sliders.slider2,
